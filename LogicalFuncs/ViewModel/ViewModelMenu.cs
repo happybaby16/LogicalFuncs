@@ -12,6 +12,8 @@ namespace LogicalFuncs.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+        //Анимация меню "Бургер"
         #region Menu animation
         double widthMenu = 150; //Menu is open 
         public double WidthMenu

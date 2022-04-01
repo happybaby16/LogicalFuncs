@@ -70,7 +70,7 @@
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <Button Content="◁" Grid.Row="0" Background="White" BorderBrush="#1A76CE" Foreground="#1A76CE" Click="Button_Back_Click" Width="30" HorizontalAlignment="Left"/>
-        <DocumentViewer HorizontalAlignment="Left" Margin="0,42,0,0" BorderThickness="0"   Name="documentViewer" VerticalAlignment="Top"  ShowPageBorders="False" Grid.Row="1"/>
+        <DocumentViewer HorizontalAlignment="Left" Margin="0,42,0,0" BorderThickness="0"   Name="documentViewer" VerticalAlignment="Top"  ShowPageBorders="False" Grid.Row="1" VerticalPageSpacing="0"/>
         
     </Grid>
 </Page>

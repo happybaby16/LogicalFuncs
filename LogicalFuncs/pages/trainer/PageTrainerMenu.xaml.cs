@@ -24,16 +24,5 @@ namespace LogicalFuncs.pages.trainer
         {
             InitializeComponent();
         }
-
-        //Анимация появления страницы
-        private async void pageObject_Loaded(object sender, RoutedEventArgs e)
-        {
-            pageObject.Opacity = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                pageObject.Opacity += 0.10;
-                await Task.Delay(30);
-            }
-        }
     }
 }

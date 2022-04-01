@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Супер пупер программа для нахождения значений логических функций при разных парметрах ПЛЮС БЕСПЛАТНО БЕЗ РЕГИСТАРЦИИ И СМС" Height="450" Width="800"
         Background="White"
-        MinWidth="750"
+        MinWidth="1000"
         MinHeight="650">
 
     <Window.Resources>
@@ -76,6 +76,6 @@
         </ScrollViewer>
         
         <!--Контейнер загрузки страниц-->
-        <Frame x:Name="PagesFrameContener" Grid.Column="1" Background="White" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="PagesFrameContener" Grid.Column="1" Background="White" NavigationUIVisibility="Hidden" LoadCompleted="PagesFrameContener_LoadCompleted"/>
     </Grid>
 </Window>

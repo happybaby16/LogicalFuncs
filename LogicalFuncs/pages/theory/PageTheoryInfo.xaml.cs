@@ -78,7 +78,7 @@ namespace LogicalFuncs.pages.theory
             }
             catch (Exception exp)
             {
-                string str = exp.Message;
+                //Ничего не нужно делать, поскольку при ошибке попытка повтириться
             }
             return null;
         }
