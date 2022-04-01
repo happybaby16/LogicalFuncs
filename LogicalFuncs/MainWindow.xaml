@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogicalFuncs"
         mc:Ignorable="d"
-        Title="Logical Functions" Height="450" Width="800"
-        Background="White">
+        Title="Супер пупер программа для нахождения значений логических функций при разных парметрах ПЛЮС БЕСПЛАТНО БЕЗ РЕГИСТАРЦИИ И СМС" Height="450" Width="800"
+        Background="White"
+        MinWidth="750"
+        MinHeight="650">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -42,31 +44,31 @@
                 
                 <!--Пункты меню-->
                 <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}">
+                        <StackPanel Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTheory, Path=Text}">
                         <Image  Source="../../images/icons/theory_icon.png" Width="35" Height="25" >
                             <Image.InputBindings>
                                 <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
                             </Image.InputBindings>
                         </Image>
-                        <TextBlock Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Теория</TextBlock>
+                        <TextBlock x:Name="txtTheory" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Теория</TextBlock>
                     </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}">
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtPractice, Path=Text}">
                         <Image  Source="../../images/icons/practice_icon.png" Width="35" Height="25" >
                             <Image.InputBindings>
                                 <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
                             </Image.InputBindings>
                         </Image>
-                        <TextBlock Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Практика</TextBlock>
+                        <TextBlock x:Name="txtPractice" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Практика</TextBlock>
                     </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}">
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
                             <Image  Source="../../images/icons/logicalfuncs_icon.png" Width="35" Height="25" >
                                 <Image.InputBindings>
                                     <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
                                 </Image.InputBindings>
                             </Image>
-                            <TextBlock Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Тренажер</TextBlock>
+                            <TextBlock x:Name="txtTrainer" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Тренажер</TextBlock>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

@@ -1,5 +1,4 @@
-﻿using LogicalFuncs.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LogicalFuncs.pages.theory
+namespace LogicalFuncs.pages.trainer
 {
     /// <summary>
-    /// Логика взаимодействия для PageTheoryMenu.xaml
+    /// Логика взаимодействия для PageTrainerMenu.xaml
     /// </summary>
-    public partial class PageTheoryMenu : Page
+    public partial class PageTrainerMenu : Page
     {
-        ViewModelMenu VMM;
-        public PageTheoryMenu(ViewModelMenu VMM)
+        public PageTrainerMenu()
         {
             InitializeComponent();
-            this.VMM = VMM;
-            DataContext = VMM;
         }
 
         //Анимация появления страницы
@@ -39,12 +35,5 @@ namespace LogicalFuncs.pages.theory
                 await Task.Delay(30);
             }
         }
-
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Image tImg = (Image)sender;
-            PagesNavigation.PageContener.Navigate(new PageTheoryInfo(tImg.Uid));
-        }
-
     }
 }

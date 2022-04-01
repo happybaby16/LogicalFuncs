@@ -8,8 +8,10 @@
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageTheoryMenu">
-
+      Title="PageTheoryMenu"
+      Name="pageObject"
+      Loaded="pageObject_Loaded"
+    >
 
     <Page.Resources>
         <Style TargetType="StackPanel">
@@ -53,41 +55,62 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
-                <Image Source="../../images/theory/Inversion.png" Uid="\source\docs\theory\123.docx" MouseDown="Image_MouseDown"/>
-                <TextBlock>Инверсия</TextBlock>
+                <Image Source="../../images/theory/Introduction.png" Uid="\source\docs\theory\Introduction.docx" MouseDown="Image_MouseDown"/>
+                <TextBlock>Высказывания</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
-                <Image Source="../../images/theory/Conjunction.png"/>
-                <TextBlock>Конъюнкция</TextBlock>
+                <Image Source="../../images/theory/Inversion.png" Uid="\source\docs\theory\Inversion.docx" MouseDown="Image_MouseDown"/>
+                <TextBlock>Инверсия</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2">
-                <Image Source="../../images/theory/Disunction.png"/>
-                <TextBlock>Дизъюнкция</TextBlock>
+                <Image Source="../../images/theory/Conjunction.png" Uid="\source\docs\theory\Conjunction.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock>Конъюнкция</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-                <Image Source="../../images/theory/Implication.png"/>
-                <TextBlock>Испликция</TextBlock>
+                <Image Source="../../images/theory/Disunction.png"  Uid="\source\docs\theory\Disunction.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock>Дизъюнкция</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
-                <Image Source="../../images/theory/Equivalence.png"/>
-                <TextBlock>Эквиваленция</TextBlock>
+                <Image Source="../../images/theory/Implication.png" Uid="\source\docs\theory\Implication.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock>Импликция</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2">
-                <Image Source="../../images/theory/PierArrow.png"/>
-                <TextBlock>Стрелка Пирса</TextBlock>
+                <Image Source="../../images/theory/Equivalence.png"  Uid="\source\docs\theory\Equivalence.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock>Эквиваленция</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0">
-                <Image Source="../../images/theory/SchaefferStroke.png"/>
+                <Image Source="../../images/theory/PierArrow.png"  Uid="\source\docs\theory\PierArrow.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock>Стрелка Пирса</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1">
+                <Image Source="../../images/theory/SchaefferStroke.png"  Uid="\source\docs\theory\SchaefferStroke.docx"  MouseDown="Image_MouseDown"/>
                 <TextBlock>Штрих Шеффера</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2">
+                <Image Source="../../images/theory/SumModulo.png"  Uid="\source\docs\theory\SumModulo.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock>Сумма по модулю два</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0">
+                <Image Source="../../images/theory/Formula.png"  Uid="\source\docs\theory\Formula.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock>Формулы логики</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="1">
+                <Image Source="../../images/theory/Classes.png" Uid="\source\docs\theory\Classes.docx" MouseDown="Image_MouseDown"/>
+                <TextBlock>Замкнутые классы</TextBlock>
             </StackPanel>
 
         </Grid>

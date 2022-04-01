@@ -29,21 +29,23 @@ namespace LogicalFuncs.pages.theory
             LoadDocFile(docFileName);
         }
 
+
         private async void LoadDocFile(string docFileName)
         {
             string fullName = Environment.CurrentDirectory + docFileName;
             string newXPSDocumentName = String.Concat(System.IO.Path.GetDirectoryName(fullName), "\\", System.IO.Path.GetFileNameWithoutExtension(docFileName), ".xps");
-            XpsDocument document=null;
-            while (document==null)
+            XpsDocument document = null;
+            while (document == null)
             {
                 try
-                { 
+                {
                     document = ConvertWordDocToXPSDoc(fullName, newXPSDocumentName).Result;
                 }
-                catch(Exception)
+                catch (Exception)
                 { continue; }
             }
             documentViewer.Document = document.GetFixedDocumentSequence();
+            //documentViewer.Document = new XpsDocument(fullName.Replace(".docx", ".xps"), System.IO.FileAccess.Read).GetFixedDocumentSequence();
             xpsDocument.Close();
         }
 

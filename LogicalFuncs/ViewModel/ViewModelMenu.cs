@@ -53,10 +53,13 @@ namespace LogicalFuncs.ViewModel
             MenuMoveCanExecute = true;
         }
         #endregion
+
         public ViewModelMenu()
         {
             MenuMoveBinding = new CommandBinding(MenuMoveCommand);
             MenuMoveBinding.Executed += MenuMove;
         }
+
+
     }
 }

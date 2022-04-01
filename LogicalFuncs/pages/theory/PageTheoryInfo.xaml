@@ -6,7 +6,9 @@
       xmlns:local="clr-namespace:LogicalFuncs.pages.theory"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageTheoryInfo">
+      Title="PageTheoryInfo"
+      Margin="5,0"
+      >
 
     <Page.Resources>
         <Style x:Key="{x:Type DocumentViewer}"
@@ -55,7 +57,8 @@
         
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="/LogicalFuncs;component/fonts/#Roboto Thin"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0.7"/>
         </Style>
     </Page.Resources>
 
@@ -63,11 +66,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="20*"/>
-            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        <Button Content="◁" Grid.Row="0" Background="White" BorderBrush="#1A76CE" Foreground="#1A76CE" Click="Button_Back_Click" Width="30" HorizontalAlignment="Left"/>
+        <DocumentViewer HorizontalAlignment="Left" Margin="0,42,0,0" BorderThickness="0"   Name="documentViewer" VerticalAlignment="Top"  ShowPageBorders="False" Grid.Row="1"/>
         
-        <DocumentViewer HorizontalAlignment="Left" Margin="0,42,0,0" BorderThickness="0"   Name="documentViewer" VerticalAlignment="Top"  ShowPageBorders="False" Grid.Column="0" Grid.Row="0"/>
-        <Button Content="Назад" Grid.Row="1" Background="White" BorderBrush="#1A76CE" Foreground="#1A76CE" Click="Button_Back_Click"/>
     </Grid>
 </Page>
