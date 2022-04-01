@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,20 +34,33 @@ namespace LogicalFuncs.pages.theory
         private async void LoadDocFile(string docFileName)
         {
             string fullName = Environment.CurrentDirectory + docFileName;
-            string newXPSDocumentName = String.Concat(System.IO.Path.GetDirectoryName(fullName), "\\", System.IO.Path.GetFileNameWithoutExtension(docFileName), ".xps");
-            XpsDocument document = null;
-            while (document == null)
+            if (File.Exists(fullName))
             {
-                try
+                if (!File.Exists(fullName.Replace(".docx", ".xps")))
                 {
-                    document = ConvertWordDocToXPSDoc(fullName, newXPSDocumentName).Result;
+                    string newXPSDocumentName = String.Concat(System.IO.Path.GetDirectoryName(fullName), "\\", System.IO.Path.GetFileNameWithoutExtension(docFileName), ".xps");
+                    XpsDocument document = null;
+                    while (document == null)
+                    {
+                        try
+                        {
+                            document = ConvertWordDocToXPSDoc(fullName, newXPSDocumentName).Result;
+                        }
+                        catch (Exception)
+                        { continue; }
+                    }
+                    documentViewer.Document = document.GetFixedDocumentSequence();
+                    xpsDocument.Close();
                 }
-                catch (Exception)
-                { continue; }
+                else
+                {
+                    documentViewer.Document = new XpsDocument(fullName.Replace(".docx", ".xps"), System.IO.FileAccess.Read).GetFixedDocumentSequence();
+                }
             }
-            documentViewer.Document = document.GetFixedDocumentSequence();
-            //documentViewer.Document = new XpsDocument(fullName.Replace(".docx", ".xps"), System.IO.FileAccess.Read).GetFixedDocumentSequence();
-            xpsDocument.Close();
+            else
+            {
+                MessageBox.Show($"Файл {docFileName.Split('\\')[4]} не был найден по указанному пути: {fullName}! Проверьте наличие файла по указанному пути.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async static Task<XpsDocument> ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
