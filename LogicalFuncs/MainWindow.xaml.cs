@@ -24,7 +24,7 @@ namespace LogicalFuncs
         ViewModelMenu VMM = new ViewModelMenu();
         PageTheoryMenu pageTheoryMenu;
         PagePracticeMenu pagePracticeMenu;
-        PageTrainerMenu pageTrainerMenu;
+        PageTrainer pageTrainerMenu;
 
         public MainWindow()
         {
@@ -35,11 +35,12 @@ namespace LogicalFuncs
             CommandBindings.Add(VMM.MenuMoveBinding);
         }
 
+        //Загрузка пунктов меню
         private void Point_Menu_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             pageTheoryMenu = new PageTheoryMenu(VMM);
             pagePracticeMenu = new PagePracticeMenu();
-            pageTrainerMenu = new PageTrainerMenu();
+            pageTrainerMenu = new PageTrainer();
 
             StackPanel obj = (StackPanel)sender;
             switch (obj.Uid)
@@ -56,15 +57,17 @@ namespace LogicalFuncs
             }
         }
 
-
         //Анимация плавного появления страницы
         private async void PagesFrameContener_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+            int startMarginTop = 9;
             PagesFrameContener.Opacity = 0;
+            PagesFrameContener.Margin = new Thickness(0, startMarginTop, 0, 0);
             for (int i = 0; i < 10; i++)
             {
                 PagesFrameContener.Opacity += 0.10;
-                await Task.Delay(30);
+                PagesFrameContener.Margin = new Thickness(0, startMarginTop-i, 0, 0);
+                await Task.Delay(10);
             }
         }
     }

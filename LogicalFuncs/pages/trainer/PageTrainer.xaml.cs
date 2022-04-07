@@ -16,13 +16,15 @@ using System.Windows.Shapes;
 namespace LogicalFuncs.pages.trainer
 {
     /// <summary>
-    /// Логика взаимодействия для PageTrainerMenu.xaml
+    /// Логика взаимодействия для PageTrainer.xaml
     /// </summary>
-    public partial class PageTrainerMenu : Page
+    public partial class PageTrainer : Page
     {
-        public PageTrainerMenu()
+        public PageTrainer()
         {
             InitializeComponent();
+            CalculatorContener.Navigate(new PageLogicalFuncsCalculator());
+            GridInputContener.Navigate(new PageGridInput());
         }
     }
 }

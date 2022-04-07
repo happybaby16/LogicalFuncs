@@ -69,8 +69,14 @@
     <Compile Include="pages\theory\PageTheoryMenu.xaml.cs">
       <DependentUpon>PageTheoryMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\trainer\PageTrainerMenu.xaml.cs">
-      <DependentUpon>PageTrainerMenu.xaml</DependentUpon>
+    <Compile Include="pages\trainer\PageGridInput.xaml.cs">
+      <DependentUpon>PageGridInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\trainer\PageLogicalFuncsCalculator.xaml.cs">
+      <DependentUpon>PageLogicalFuncsCalculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\trainer\PageTrainer.xaml.cs">
+      <DependentUpon>PageTrainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelMenu.cs" />
     <Page Include="MainWindow.xaml">
@@ -97,7 +103,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="pages\trainer\PageTrainerMenu.xaml">
+    <Page Include="pages\trainer\PageGridInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\trainer\PageLogicalFuncsCalculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\trainer\PageTrainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

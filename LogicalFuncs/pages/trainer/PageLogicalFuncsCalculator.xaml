@@ -1,0 +1,92 @@
+﻿<Page x:Class="LogicalFuncs.pages.trainer.PageLogicalFuncsCalculator"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LogicalFuncs.pages.trainer"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="400"
+      Title="PageLogicalFuncsCalculator"
+      Margin="10,0"
+      >
+
+
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0.8"/>
+            <Setter Property="BorderBrush" Value="#1A76CE"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="#585555"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0.4"/>
+            <Setter Property="BorderBrush" Value="#1A76CE"/>
+            <Setter Property="FontSize" Value="21"/>
+            <Setter Property="Foreground" Value="#1A76CE"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <!--Поле для ввода пользовательской функции-->
+        <TextBox x:Name="txtFunc" Grid.ColumnSpan="5" Margin="0,0,0,5"/>
+
+        <!--Кнопки калькулятора-->
+
+        <!--Первая строка кнопок сверху-->
+        <Button Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1"   Click="Clear"/>
+        <Button Content="(" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1"   Click="Button_Click"/>
+        <Button Content=")" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="1"   Click="Button_Click"/>
+        <Button Content="⌫" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1" FontSize="18" Click="RemoveLastElement"/>
+
+        <!--Вторая строка кнопок сверху-->
+        <Button Content="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Foreground="#585555"  Click="Button_Click"/>
+        <Button Content="¬" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2" FontSize="30"  Click="Button_Click"/>
+        <Button Content="↔" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="2" FontSize="30" Click="Button_Click"/>
+
+        <!--Третья строка кнопок сверху-->
+        <Button Content="J" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="3" Foreground="#585555" Click="Button_Click" />
+        <Button Content="H" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="3" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="3" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="→" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="3"  FontSize="30" Click="Button_Click"/>
+
+        <!--Четвертая строка кнопок сверху-->
+        <Button Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="4" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="4" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="∨" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="4"  FontSize="30"  Click="Button_Click"/>
+
+        <!--Пятая строка кнопок сверху-->
+        <Button Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="5" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="5" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="5" Foreground="#585555" Click="Button_Click"/>
+        <Button Content="∧" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="5" FontSize="30"  Click="Button_Click"/>
+
+        <!--Шестая строка кнопок сверху-->
+        <Button Content="↓" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="6" FontSize="30"  Click="Button_Click"/>
+        <Button Content="⊕" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" FontSize="26" Click="Button_Click"/>
+        <Button Content="|" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="6" FontSize="24" Click="Button_Click"/>
+        <Button Content="=" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="6" Background="#1A76CE" Foreground="White"  FontSize="40"  Click="Button_Click"/>
+
+    </Grid>
+</Page>

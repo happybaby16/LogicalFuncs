@@ -8,7 +8,8 @@
         Title="Супер пупер программа для нахождения значений логических функций при разных парметрах ПЛЮС БЕСПЛАТНО БЕЗ РЕГИСТАРЦИИ И СМС" Height="450" Width="800"
         Background="White"
         MinWidth="1000"
-        MinHeight="650">
+        MinHeight="650"
+       >
 
     <Window.Resources>
         <Style TargetType="TextBlock">
