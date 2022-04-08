@@ -34,7 +34,7 @@
         </Grid.ColumnDefinitions>
 
         <ScrollViewer CanContentScroll="False" VerticalScrollBarVisibility="Auto" Width="Auto">
-        <StackPanel Background="#1A76CE">
+        <StackPanel Background="{StaticResource AppBlueColor}">
                 <StackPanel HorizontalAlignment="Left" Margin="10" Orientation="Vertical">
                 <!--Кнопка меню-->
                 <Image  Source="../../images/icons/Burger.png" Margin="10,0,0,0" Width="15" Height="12" HorizontalAlignment="Left">

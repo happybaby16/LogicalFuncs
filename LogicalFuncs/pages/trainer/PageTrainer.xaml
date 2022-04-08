@@ -6,7 +6,9 @@
       xmlns:local="clr-namespace:LogicalFuncs.pages.trainer"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageTrainer">
+      Title="PageTrainer"
+      Name="pageNameCalc"
+      >
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,13 +17,12 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Frame x:Name="CalculatorContener" Grid.RowSpan="2"/>
         <Frame x:Name="GridInputContener" Grid.Column="1"/>
-
 
     </Grid>
 </Page>

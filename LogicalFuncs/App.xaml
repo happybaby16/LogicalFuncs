@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:LogicalFuncs"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="AppBlueColor" Color="#1A76CE" />
+        <SolidColorBrush x:Key="AppGreyText" Color="#585555" />
     </Application.Resources>
 </Application>

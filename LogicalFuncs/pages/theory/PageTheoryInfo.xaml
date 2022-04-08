@@ -58,7 +58,7 @@
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="/LogicalFuncs;component/fonts/#Roboto Thin"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderThickness" Value="0.7"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
     </Page.Resources>
 
@@ -69,7 +69,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        <Button Content="◁" Grid.Row="0" Background="White" BorderBrush="#1A76CE" Foreground="#1A76CE" Click="Button_Back_Click" Width="30" HorizontalAlignment="Left"/>
+        <Button Content="◁" Grid.Row="0" Background="White" BorderBrush="{StaticResource AppBlueColor}" Foreground="{StaticResource AppBlueColor}" Click="Button_Back_Click" Width="30" HorizontalAlignment="Left"/>
         <DocumentViewer HorizontalAlignment="Left" Margin="0,42,0,0" BorderThickness="0"   Name="documentViewer" VerticalAlignment="Top"  ShowPageBorders="False" Grid.Row="1" VerticalPageSpacing="0"/>
         
     </Grid>

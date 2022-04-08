@@ -20,6 +20,7 @@ namespace LogicalFuncs.pages.trainer
     /// </summary>
     public partial class PageLogicalFuncsCalculator : Page
     {
+        List<string> parsedFuncs = new List<string>();
         public PageLogicalFuncsCalculator()
         {
             InitializeComponent();
@@ -44,6 +45,30 @@ namespace LogicalFuncs.pages.trainer
             }
             catch
             { }
+        }
+
+        private void AddFunc(object sender, RoutedEventArgs e)
+        {
+            //Проверка на невозможность добовления новой функции, если предыдущая строка не была заполнена
+            if (txtFunc.Text!=string.Empty && 
+                txtFunc.Text[txtFunc.Text.Length - 1] != '\n' && 
+                txtFunc.Text[txtFunc.Text.Length - 1] != '\0')
+            {
+                txtFunc.Text += '\n';
+            }
+        }
+
+        private void ResultAdding(object sender, RoutedEventArgs e)
+        {
+            parsedFuncs = new List<string>();
+            string[] tempMassFuncs = txtFunc.Text.Replace("\r", string.Empty).Replace(" ", string.Empty).Split('\n');
+            foreach (string funcString in tempMassFuncs)
+            {
+                if (funcString != string.Empty)
+                {
+                    parsedFuncs.Add(funcString);
+                }
+            }
         }
     }
 }

@@ -22,12 +22,13 @@ namespace LogicalFuncs.pages.trainer
     {
         List<List<TextBox>> cellGridInput = new List<List<TextBox>>();
         List<TextBlock> headerGridInput = new List<TextBlock>();
-        List<string> variables = new List<string>() { "A","B","C"};
+        List<DockPanel> backgroundHeaders = new List<DockPanel>();
+        List<string> variables = new List<string>() { "A","B", "C"};
         GridLength size = new GridLength(1, GridUnitType.Star);
         public PageGridInput()
         {
             InitializeComponent();
-            GenerateGridInput(variables, 7);
+            GenerateGridInput(variables, 5);
         }
 
         private async void GenerateGridInput(List<string> variables, int countMoves)
@@ -35,6 +36,7 @@ namespace LogicalFuncs.pages.trainer
             //Очищаем предыдущую генерацию
             gridInput.Children.Clear();
             headerGridInput.Clear();
+            backgroundHeaders.Clear();
             cellGridInput.Clear();
 
             //Генерируем столбцы таблицы 
@@ -44,13 +46,16 @@ namespace LogicalFuncs.pages.trainer
             }
 
             //Генерируем строки таблицы 
-            for (int i = 0; i < Math.Pow(2, variables.Count); i++)
+            for (int i = 0; i < Math.Pow(2, variables.Count)+1; i++)
             {
                 if (i == 0)
                 {
-                    gridInput.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                    gridInput.RowDefinitions.Add(new RowDefinition() { Height = size });
                 }
-                gridInput.RowDefinitions.Add(new RowDefinition() { Height = size });
+                else
+                {
+                    gridInput.RowDefinitions.Add(new RowDefinition() { Height = size });
+                }
             }
 
 
@@ -58,25 +63,29 @@ namespace LogicalFuncs.pages.trainer
 
             for (int j = 0; j < variables.Count + countMoves; j++)
             {
+                DockPanel background = new DockPanel();
                 TextBlock header = new TextBlock();
+                background.Children.Add(header);
                 try
                 {
                     header.Text = variables[j];
                 }
                 catch
                 {
-                    header.Text = Convert.ToString(j - (variables.Count - 1));
+                    header.FontSize = 12;
+                    header.Text = "№"+Convert.ToString(j - (variables.Count - 1));
                 }
                
-                Grid.SetRow(header, 0);
-                Grid.SetColumn(header, j);
-                gridInput.Children.Add(header);
+                Grid.SetRow(background, 0);
+                Grid.SetColumn(background, j);
+                gridInput.Children.Add(background);
                 headerGridInput.Add(header);
+                backgroundHeaders.Add(background);
             }
 
            
             //Генерируем контент таблицы
-            for (int i = 1; i < Math.Pow(variables.Count, 2) + 1; i++)
+            for (int i = 1; i < Math.Pow(2, variables.Count) + 1; i++)
             {
                 cellGridInput.Add(new List<TextBox>());
                 for (int j = 0; j < variables.Count + countMoves; j++)
