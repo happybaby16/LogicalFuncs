@@ -82,31 +82,25 @@ namespace LogicFuncs.Model
 
     class LogicFuncCalculator
     {
-        string logicFunc = string.Empty;//Переменная, в которой хранится логическая функция
-       
+        public string LogicalFunc { get; set; }//Переменная, в которой хранится логическая функция
+        public List<string> VariableNames { get; set; }
+        public List<bool> Answer { get; set; }
+        public List<string> OperationsPriority { get; set; }//Хранит строковое значение операций по убыванию решения
+        public List<List<LogicalFuncsLogs>> CalculationLogs { get; set; }
+
         Regex operations = new Regex(@"→|↔|¬|∧|∨|⊕|\||↓");//Операции
         Regex variables = new Regex(@"[0-1]");//Переменные
         Regex brackets = new Regex(@"\(|\)");//Скобки
         Regex variablesFunc = new Regex(@"[A-Z]|[a-z]");
-        public List<string> variableNameList;
-
+     
         List<Token> tokenList;//Список токенов логического выражения
-        List<Token> tokenListFucn;//Списк токенов для логической функции
-
-        List<bool> answerList;
-
-        public List<List<int>> operationsResults; //Хранит значение промежуточных действий при решении логического выражения
-        public List<string> operationsPriority;//Хранит строковое значение операций по убыванию решения
-        public List<List<int>> varibleValues;//Хранит значение переменных функции
-
-        public List<List<LogicalFuncsLogs>> CalculationLogs;
-
+        List<Token> tokenListFunc;//Списк токенов для логической функции
 
         public void SetLogicFunc(string logicFunc)
         {
-            this.logicFunc = logicFunc.Trim().Replace(" ","");
-            tokenListFucn = GetTokenListFunc(this.logicFunc);
-            variableNameList = LogicFucnsParser.GetVariable(logicFunc);
+            this.LogicalFunc = logicFunc.Trim().Replace(" ","");
+            tokenListFunc = GetTokenListFunc(this.LogicalFunc);
+            VariableNames = LogicFucnsParser.GetVariable(logicFunc);
         }
         public List<Token> GetTokenList(string logicExpression)
         {
@@ -137,29 +131,29 @@ namespace LogicFuncs.Model
 
         public List<Token> GetTokenListFunc(string funcString)
         {
-            tokenListFucn = new List<Token>();
+            tokenListFunc = new List<Token>();
             for (int i = 0; i < funcString.Length; i++)
             {
                 bool temp = variablesFunc.IsMatch(Convert.ToString(funcString[i]));
                 if (temp)
                 {
-                    tokenListFucn.Add(new Token(funcString[i], TypeValue.Variable));
+                    tokenListFunc.Add(new Token(funcString[i], TypeValue.Variable));
                     continue;
                 }
                 temp = operations.IsMatch(Convert.ToString(funcString[i]));
                 if (temp)
                 {
-                    tokenListFucn.Add(new Token(funcString[i], TypeValue.Operation));
+                    tokenListFunc.Add(new Token(funcString[i], TypeValue.Operation));
                     continue;
                 }
                 temp = brackets.IsMatch(Convert.ToString(funcString[i]));
                 if (temp)
                 {
-                    tokenListFucn.Add(new Token(funcString[i], TypeValue.Brackets));
+                    tokenListFunc.Add(new Token(funcString[i], TypeValue.Brackets));
                     continue;
                 }
             }
-            return tokenListFucn;
+            return tokenListFunc;
         }
 
 
@@ -168,230 +162,233 @@ namespace LogicFuncs.Model
         /// </summary>
         /// <param name="logicExpression">Логическое выражение. Например: (0V1|1)</param>
         /// <returns></returns>
-        public bool CalculateExpression(string logicExpression)
+        public bool? CalculateExpression(string logicExpression)
         {
             List<Token> tokenExpression = GetTokenList(logicExpression);
-            Stack<bool> valuesStack = new Stack<bool>();
-            Stack<Token> operationsStack = new Stack<Token>();
 
-            operationsPriority = new List<string>();
+            Stack<bool> valuesStack = new Stack<bool>();//Стек со значениями для решения
+            Stack<Token> operationsStack = new Stack<Token>();//Стек с операциями для решения
+            OperationsPriority = new List<string>();
             Stack<string> operationsPriorityString = new Stack<string>();
-
-            
-
-            for (int i = 0; i < tokenExpression.Count; i++)
+            try
             {
-                if (tokenExpression[i].Type == TypeValue.Operation)
+                for (int i = 0; i < tokenExpression.Count; i++)
                 {
-                    if (operationsStack.Count!=0 && operationsStack.Peek().Value.ToString()!= "(" && operationsStack.Peek().Value.ToString() != ")" && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count > 1)
+                    if (tokenExpression[i].Type == TypeValue.Operation)
                     {
-                        while (operationsStack.Count > 0 && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count > 1 )
+                        if (operationsStack.Count != 0 && operationsStack.Peek().Value.ToString() != "(" && operationsStack.Peek().Value.ToString() != ")" && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count > 1)
                         {
-                            if (operationsStack.Peek().Value.ToString() == "¬")
+                            while (operationsStack.Count > 0 && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count > 1)
                             {
-                                LogicalFuncsLogs temp = new LogicalFuncsLogs();
+                                if (operationsStack.Peek().Value.ToString() == "¬")
+                                {
+                                    LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
-                                string resultPriority = $"{operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()}";
-                                operationsPriorityString.Push(resultPriority);
-                                operationsPriority.Add(resultPriority);
+                                    string resultPriority = $"{operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()}";
+                                    operationsPriorityString.Push(resultPriority);
+                                    OperationsPriority.Add(resultPriority);
 
+                                    bool fVal = valuesStack.Pop();
+                                    bool resultCalc = LogicOperations.Inversion(fVal);
+                                    valuesStack.Push(resultCalc);
+                                    temp.FirstValue = fVal;
+                                    temp.OperationValue = operationsStack.Peek();
+                                    temp.ResultValue = resultCalc;
+                                    temp.OperationPriority = resultPriority;
+                                    operationsStack.Pop();
 
-                                bool fVal = valuesStack.Pop();
-                                bool resultCalc = LogicOperations.Inversion(fVal);
-                                valuesStack.Push(resultCalc);
-                                operationsResults[operationsResults.Count - 1].Add(Convert.ToInt32(resultCalc));
-                                temp.FirstValue = fVal;
-                                temp.OperationValue = operationsStack.Peek();
-                                temp.ResultValue = resultCalc;
-                                temp.OperationPriority = resultPriority;
-                                operationsStack.Pop();
+                                    CalculationLogs[CalculationLogs.Count - 1].Add(temp);
+                                }
+                                else
+                                {
+                                    LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
-                                CalculationLogs[CalculationLogs.Count - 1].Add(temp);
+                                    string previousOperation = operationsPriorityString.Pop();
+                                    string sOperation = operationsStack.Peek().Value.ToString();
+                                    string fOperation = operationsPriorityString.Pop();
+                                    string resultPriority = $"{fOperation + sOperation}({previousOperation})";
+                                    operationsPriorityString.Push(resultPriority);
+                                    OperationsPriority.Add(resultPriority);
+
+                                    bool sVal = valuesStack.Pop();
+                                    bool fVal = valuesStack.Pop();
+
+                                    temp.FirstValue = fVal;
+                                    temp.SecondValue = sVal;
+                                    temp.OperationValue = operationsStack.Peek();
+                                    temp.OperationPriority = resultPriority;
+
+                                    bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
+                                    temp.ResultValue = resultCalc;
+                                    valuesStack.Push(resultCalc);
+
+                                    CalculationLogs[CalculationLogs.Count - 1].Add(temp);
+                                }
                             }
-                            else
-                            {
-                                LogicalFuncsLogs temp = new LogicalFuncsLogs();
-
-                                string previousOperation = operationsPriorityString.Pop();
-                                string sOperation = operationsStack.Peek().Value.ToString();
-                                string fOperation = operationsPriorityString.Pop();
-                                string resultPriority = $"{fOperation + sOperation}({previousOperation})";
-                                operationsPriorityString.Push(resultPriority);
-                                operationsPriority.Add(resultPriority);
-
-                                bool sVal = valuesStack.Pop();
-                                bool fVal = valuesStack.Pop();
-
-                                temp.FirstValue = fVal;
-                                temp.SecondValue = sVal;
-                                temp.OperationValue = operationsStack.Peek();
-                                temp.OperationPriority = resultPriority;
-
-                                bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
-                                temp.ResultValue = resultCalc;
-                                valuesStack.Push(resultCalc);
-                                operationsResults[operationsResults.Count - 1].Add(Convert.ToInt32(resultCalc));
-
-                                CalculationLogs[CalculationLogs.Count - 1].Add(temp);
-                            }
+                            operationsStack.Push(tokenExpression[i]);
+                            continue;
                         }
-                        operationsStack.Push(tokenExpression[i]);
+                        else
+                        {
+                            operationsStack.Push(tokenExpression[i]);
+                            continue;
+                        }
+                    }
+
+                    if (tokenExpression[i].Type == TypeValue.Variable)
+                    {
+                        valuesStack.Push(Convert.ToBoolean(Convert.ToInt32(tokenExpression[i].Value.ToString())));
+                        operationsPriorityString.Push(tokenListFunc[i].Value.ToString());
                         continue;
+                    }
+                    if (tokenExpression[i].Type == TypeValue.Brackets)
+                    {
+                        if (tokenExpression[i].Value.ToString() == "(") operationsStack.Push(tokenExpression[i]);
+                        if (tokenExpression[i].Value.ToString() == ")")
+                        {
+                            while (operationsStack.Peek().Value.ToString() != "(" && valuesStack.Count > 1)
+                            {
+                                if (operationsStack.Peek().Value.ToString() == "¬")
+                                {
+                                    LogicalFuncsLogs temp = new LogicalFuncsLogs();
+
+                                    string resultPriority = $"{operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()}";
+                                    operationsPriorityString.Push(resultPriority);
+                                    OperationsPriority.Add(resultPriority);
+
+                                    bool fVal = valuesStack.Pop();
+                                    bool resultCalc = LogicOperations.Inversion(fVal);
+                                    valuesStack.Push(resultCalc);
+                                    temp.FirstValue = fVal;
+                                    temp.OperationValue = operationsStack.Peek();
+                                    temp.ResultValue = resultCalc;
+                                    temp.OperationPriority = resultPriority;
+                                    operationsStack.Pop();
+
+                                    CalculationLogs[CalculationLogs.Count - 1].Add(temp);
+                                }
+                                else
+                                {
+                                    LogicalFuncsLogs temp = new LogicalFuncsLogs();
+
+                                    string previousOperation = operationsPriorityString.Pop();
+                                    string sOperation = operationsStack.Peek().Value.ToString();
+                                    string fOperation = operationsPriorityString.Pop();
+                                    string resultPriority = $"{fOperation + sOperation}({previousOperation})";
+                                    operationsPriorityString.Push(resultPriority);
+                                    OperationsPriority.Add(resultPriority);
+
+                                    bool sVal = valuesStack.Pop();
+                                    bool fVal = valuesStack.Pop();
+
+                                    temp.FirstValue = fVal;
+                                    temp.SecondValue = sVal;
+                                    temp.OperationValue = operationsStack.Peek();
+                                    temp.OperationPriority = resultPriority;
+
+                                    bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
+                                    temp.ResultValue = resultCalc;
+                                    valuesStack.Push(resultCalc);
+
+                                    CalculationLogs[CalculationLogs.Count - 1].Add(temp);
+                                }
+                            }
+                            if (operationsStack.Peek().Value.ToString() == "(") operationsStack.Pop();
+
+                        }
+                        continue;
+                    }
+                }
+                //Завершение решения после прохождения строки
+                for (int i = 0; operationsStack.Count != 0; i++)
+                {
+                    if (operationsStack.Peek().Value.ToString() == "¬")
+                    {
+                        LogicalFuncsLogs temp = new LogicalFuncsLogs();
+
+                        string resultPriority = $"{operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()}";
+                        operationsPriorityString.Push(resultPriority);
+                        OperationsPriority.Add(resultPriority);
+
+                        bool fVal = valuesStack.Pop();
+                        bool resultCalc = LogicOperations.Inversion(fVal);
+                        valuesStack.Push(resultCalc);
+                        temp.FirstValue = fVal;
+                        temp.OperationValue = operationsStack.Peek();
+                        temp.ResultValue = resultCalc;
+                        temp.OperationPriority = resultPriority;
+                        operationsStack.Pop();
+
+                        CalculationLogs[CalculationLogs.Count - 1].Add(temp);
                     }
                     else
                     {
-                        operationsStack.Push(tokenExpression[i]);
-                        continue;
+                        LogicalFuncsLogs temp = new LogicalFuncsLogs();
+
+                        string previousOperation = operationsPriorityString.Pop();
+                        string sOperation = operationsStack.Peek().Value.ToString();
+                        string fOperation = operationsPriorityString.Pop();
+                        string resultPriority = $"{fOperation + sOperation}({previousOperation})";
+                        operationsPriorityString.Push(resultPriority);
+                        OperationsPriority.Add(resultPriority);
+
+                        bool sVal = valuesStack.Pop();
+                        bool fVal = valuesStack.Pop();
+
+                        temp.FirstValue = fVal;
+                        temp.SecondValue = sVal;
+                        temp.OperationValue = operationsStack.Peek();
+                        temp.OperationPriority = resultPriority;
+
+                        bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
+                        temp.ResultValue = resultCalc;
+                        valuesStack.Push(resultCalc);
+
+                        CalculationLogs[CalculationLogs.Count - 1].Add(temp);
                     }
-                }
-
-                if (tokenExpression[i].Type == TypeValue.Variable)
-                {
-                    valuesStack.Push(Convert.ToBoolean(Convert.ToInt32(tokenExpression[i].Value.ToString())));
-                    operationsPriorityString.Push(tokenListFucn[i].Value.ToString());
-                    continue;
-                }
-                if (tokenExpression[i].Type == TypeValue.Brackets)
-                {
-                    if (tokenExpression[i].Value.ToString() == "(") operationsStack.Push(tokenExpression[i]);
-                    if (tokenExpression[i].Value.ToString() == ")")
-                    {
-                        while (operationsStack.Peek().Value.ToString() != "(" && valuesStack.Count > 1)
-                        {
-                            if (operationsStack.Peek().Value.ToString() == "¬")
-                            {
-                                LogicalFuncsLogs temp = new LogicalFuncsLogs();
-
-                                string resultPriority = $"{operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()}";
-                                operationsPriorityString.Push(resultPriority);
-                                operationsPriority.Add(resultPriority);
-
-
-                                bool fVal = valuesStack.Pop();
-                                bool resultCalc = LogicOperations.Inversion(fVal);
-                                valuesStack.Push(resultCalc);
-                                operationsResults[operationsResults.Count - 1].Add(Convert.ToInt32(resultCalc));
-                                temp.FirstValue = fVal;
-                                temp.OperationValue = operationsStack.Peek();
-                                temp.ResultValue = resultCalc;
-                                temp.OperationPriority = resultPriority;
-                                operationsStack.Pop();
-
-                                CalculationLogs[CalculationLogs.Count - 1].Add(temp);
-                            }
-                            else
-                            {
-                                LogicalFuncsLogs temp = new LogicalFuncsLogs();
-
-                                string previousOperation = operationsPriorityString.Pop();
-                                string sOperation = operationsStack.Peek().Value.ToString();
-                                string fOperation = operationsPriorityString.Pop();
-                                string resultPriority = $"{fOperation + sOperation}({previousOperation})";
-                                operationsPriorityString.Push(resultPriority);
-                                operationsPriority.Add(resultPriority);
-
-                                bool sVal = valuesStack.Pop();
-                                bool fVal = valuesStack.Pop();
-
-                                temp.FirstValue = fVal;
-                                temp.SecondValue = sVal;
-                                temp.OperationValue = operationsStack.Peek();
-                                temp.OperationPriority = resultPriority;
-
-                                bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
-                                temp.ResultValue = resultCalc;
-                                valuesStack.Push(resultCalc);
-                                operationsResults[operationsResults.Count - 1].Add(Convert.ToInt32(resultCalc));
-
-                                CalculationLogs[CalculationLogs.Count - 1].Add(temp);
-                            }
-                        }
-                        if(operationsStack.Peek().Value.ToString() == "(") operationsStack.Pop();
-
-                    }
-                    continue;
                 }
             }
-            //Завершение решения после прохождения строки
-            for (int i = 0;operationsStack.Count!=0; i++)
+            catch
             {
-                if (operationsStack.Peek().Value.ToString() == "¬")
-                {
-                    LogicalFuncsLogs temp = new LogicalFuncsLogs();
-
-                    string resultPriority = $"{operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()}";
-                    operationsPriorityString.Push(resultPriority);
-                    operationsPriority.Add(resultPriority);
-
-
-                    bool fVal = valuesStack.Pop();
-                    bool resultCalc = LogicOperations.Inversion(fVal);
-                    valuesStack.Push(resultCalc);
-                    operationsResults[operationsResults.Count - 1].Add(Convert.ToInt32(resultCalc));
-                    temp.FirstValue = fVal;
-                    temp.OperationValue = operationsStack.Peek();
-                    temp.ResultValue = resultCalc;
-                    temp.OperationPriority = resultPriority;
-                    operationsStack.Pop();
-
-                    CalculationLogs[CalculationLogs.Count - 1].Add(temp);
-                }
-                else
-                {
-                    LogicalFuncsLogs temp = new LogicalFuncsLogs();
-
-                    string previousOperation = operationsPriorityString.Pop();
-                    string sOperation = operationsStack.Peek().Value.ToString();
-                    string fOperation = operationsPriorityString.Pop();
-                    string resultPriority = $"{fOperation + sOperation}({previousOperation})";
-                    operationsPriorityString.Push(resultPriority);
-                    operationsPriority.Add(resultPriority);
-
-                    bool sVal = valuesStack.Pop();
-                    bool fVal = valuesStack.Pop();
-
-                    temp.FirstValue = fVal;
-                    temp.SecondValue = sVal;
-                    temp.OperationValue = operationsStack.Peek();
-                    temp.OperationPriority = resultPriority;
-
-                    bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
-                    temp.ResultValue = resultCalc;
-                    valuesStack.Push(resultCalc);
-                    operationsResults[operationsResults.Count - 1].Add(Convert.ToInt32(resultCalc));
-
-                    CalculationLogs[CalculationLogs.Count - 1].Add(temp);
-                }
+                return null;
             }
-            return valuesStack.Pop();
+            if (valuesStack.Count == 1 && operationsStack.Count==0)
+            {
+                return valuesStack.Pop();
+            }
+            return null;
+           
         }
 
         public List<bool> StartCalculate()
         {
             CalculationLogs = new List<List<LogicalFuncsLogs>>();
-
-            operationsResults = new List<List<int>>();
-            varibleValues = new List<List<int>>();
-            answerList = new List<bool>();
-            for (int i = 0; i < Math.Pow(2, variableNameList.Count); i++)
+            Answer = new List<bool>();
+            for (int i = 0; i < Math.Pow(2, VariableNames.Count); i++)
             {
                 CalculationLogs.Add(new List<LogicalFuncsLogs>());
-                operationsResults.Add(new List<int>());
-                varibleValues.Add(new List<int>());
                 int counter = 0;
-                string logicExpression = logicFunc;
-                for (int k = variableNameList.Count-1; k != -1; k--)
+                string logicExpression = LogicalFunc;
+                for (int k = VariableNames.Count - 1; k != -1; k--)
                 {
                     int bit = (i >> k) & 1;
-                    operationsResults[i].Add(bit);
-                    varibleValues[i].Add(bit);
-                    logicExpression = logicExpression.Replace(variableNameList[counter], Convert.ToString(bit));
+                    logicExpression = logicExpression.Replace(VariableNames[counter], Convert.ToString(bit));
                     counter++;
                 }
-                answerList.Add(CalculateExpression(logicExpression));
+                bool? answerExpression = CalculateExpression(logicExpression);
+                if (answerExpression != null)
+                {
+                    Answer.Add(Convert.ToBoolean(answerExpression));
+                }
+                else
+                {
+                    //Ошибка в вводе логической функции
+                    Answer = null;
+                    return null;
+                }
                 counter = 0;
             }
-            return answerList;
+            return Answer;
         }
 
 

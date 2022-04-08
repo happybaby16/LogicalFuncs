@@ -82,7 +82,9 @@
     <Compile Include="pages\trainer\PageTrainer.xaml.cs">
       <DependentUpon>PageTrainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Patterns\TrainerError.cs" />
     <Compile Include="ViewModel\ViewModelMenu.cs" />
+    <Compile Include="ViewModel\ViewModelTrainer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
