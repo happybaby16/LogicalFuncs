@@ -60,6 +60,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\LogicalFuncsLogs.cs" />
+    <Compile Include="Model\LogicFucnsParser.cs" />
+    <Compile Include="Model\LogicFuncCalculator.cs" />
+    <Compile Include="Model\LogicOperations.cs" />
     <Compile Include="pages\practice\PagePracticeMenu.xaml.cs">
       <DependentUpon>PagePracticeMenu.xaml</DependentUpon>
     </Compile>
