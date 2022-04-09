@@ -21,7 +21,7 @@ namespace LogicFuncs.Model
         public static List<string> GetVariable(string LogicFunc)
         {
             List<string> variableNames = new List<string>();
-            List<Match> collection = variables.Matches(LogicFunc).ToList();
+            MatchCollection collection = variables.Matches(LogicFunc);
             foreach (Match match in collection)
             {
                 if (!variableNames.Contains(match.Value))

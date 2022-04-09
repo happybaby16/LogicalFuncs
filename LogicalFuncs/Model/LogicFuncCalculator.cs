@@ -80,18 +80,17 @@ namespace LogicFuncs.Model
         }
     }
 
-    class LogicFuncCalculator
+    public class LogicFuncCalculator
     {
         public string LogicalFunc { get; set; }//Переменная, в которой хранится логическая функция
         public List<string> VariableNames { get; set; }
         public List<bool> Answer { get; set; }
         public List<string> OperationsPriority { get; set; }//Хранит строковое значение операций по убыванию решения
         public List<List<LogicalFuncsLogs>> CalculationLogs { get; set; }
-
         Regex operations = new Regex(@"→|↔|¬|∧|∨|⊕|\||↓");//Операции
         Regex variables = new Regex(@"[0-1]");//Переменные
         Regex brackets = new Regex(@"\(|\)");//Скобки
-        Regex variablesFunc = new Regex(@"[A-Z]|[a-z]");
+        Regex variablesFunc = new Regex(@"[A-Z]|[a-z]|[0,1]");
      
         List<Token> tokenList;//Список токенов логического выражения
         List<Token> tokenListFunc;//Списк токенов для логической функции
@@ -176,9 +175,9 @@ namespace LogicFuncs.Model
                 {
                     if (tokenExpression[i].Type == TypeValue.Operation)
                     {
-                        if (operationsStack.Count != 0 && operationsStack.Peek().Value.ToString() != "(" && operationsStack.Peek().Value.ToString() != ")" && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count > 1)
+                        if (operationsStack.Count != 0 && operationsStack.Peek().Value.ToString() != "(" && operationsStack.Peek().Value.ToString() != ")" && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count >= 1)
                         {
-                            while (operationsStack.Count > 0 && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count > 1)
+                            while (operationsStack.Count > 0 && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count >= 1 && operationsStack.Peek().Value.ToString() != "(" && operationsStack.Peek().Value.ToString() != ")")
                             {
                                 if (operationsStack.Peek().Value.ToString() == "¬")
                                 {
@@ -199,7 +198,7 @@ namespace LogicFuncs.Model
 
                                     CalculationLogs[CalculationLogs.Count - 1].Add(temp);
                                 }
-                                else
+                                else if(valuesStack.Count >= 2)
                                 {
                                     LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
@@ -218,7 +217,8 @@ namespace LogicFuncs.Model
                                     temp.OperationValue = operationsStack.Peek();
                                     temp.OperationPriority = resultPriority;
 
-                                    bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
+                                    Token operation = operationsStack.Pop();
+                                    bool resultCalc = LogicOperations.Calculate(fVal, sVal, operation.GetOperation);
                                     temp.ResultValue = resultCalc;
                                     valuesStack.Push(resultCalc);
 
@@ -286,7 +286,8 @@ namespace LogicFuncs.Model
                                     temp.OperationValue = operationsStack.Peek();
                                     temp.OperationPriority = resultPriority;
 
-                                    bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
+                                    Token operation = operationsStack.Pop();
+                                    bool resultCalc = LogicOperations.Calculate(fVal, sVal, operation.GetOperation);
                                     temp.ResultValue = resultCalc;
                                     valuesStack.Push(resultCalc);
 
@@ -340,7 +341,8 @@ namespace LogicFuncs.Model
                         temp.OperationValue = operationsStack.Peek();
                         temp.OperationPriority = resultPriority;
 
-                        bool resultCalc = LogicOperations.Calculate(fVal, sVal, operationsStack.Pop().GetOperation);
+                        Token operation = operationsStack.Pop();
+                        bool resultCalc = LogicOperations.Calculate(fVal, sVal, operation.GetOperation);
                         temp.ResultValue = resultCalc;
                         valuesStack.Push(resultCalc);
 
@@ -372,6 +374,7 @@ namespace LogicFuncs.Model
                 for (int k = VariableNames.Count - 1; k != -1; k--)
                 {
                     int bit = (i >> k) & 1;
+                    CalculationLogs[CalculationLogs.Count - 1].Add(new LogicalFuncsLogs() { ResultValue=Convert.ToBoolean(bit)});
                     logicExpression = logicExpression.Replace(VariableNames[counter], Convert.ToString(bit));
                     counter++;
                 }
@@ -391,6 +394,67 @@ namespace LogicFuncs.Model
             return Answer;
         }
 
+        /// <summary>
+        /// Свойство, определяющее сохраняет ли булевая функция ноль
+        /// </summary>
+        public bool IsSavedZero
+        {
+            get
+            {
+                if (Answer != null && Answer[0] == false) return true;
+                else return false;
+            }
+        }
 
+        /// <summary>
+        /// Свойство, определяющее сохраняет ли булевая функция единицу
+        /// </summary>
+        public bool IsSavedOne
+        {
+            get
+            {
+                if (Answer != null && Answer[Answer.Count - 1] == true) return true;
+                else return false;
+            }
+        }
+
+        /// <summary>
+        /// Свойство, определяющее является ли булевая функция самодвойственной
+        /// </summary>
+        public bool IsSelfDual
+        {
+            get
+            {
+                for (int i = 0; i < Answer.Count / 2; i++)
+                {
+                    if (Answer[i] == Answer[Answer.Count - 1 - i]) return false;
+                }
+                for (int i = Answer.Count / 2; i < Answer.Count; i++)
+                {
+                    if (Answer[i] == Answer[Answer.Count - 1 - i]) return false;
+                }
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Свойство, определяющее является ли булевая функция монотонной
+        /// </summary>
+        public bool IsMonotony
+        {
+            get
+            {
+                int step = Convert.ToInt32(Math.Pow(2, VariableNames.Count - 1));
+                for (int i = 0; i < VariableNames.Count; i++)
+                {
+                    for (int k = 0; step + k < Answer.Count; k++)
+                    {
+                        if (Convert.ToInt32(Answer[k]) > Convert.ToInt32(Answer[step + k])) return false;
+                    }
+                    step /= 2;
+                }
+                return true;
+            }
+        }
     }
 }

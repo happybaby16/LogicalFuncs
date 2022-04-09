@@ -9,8 +9,51 @@
       Title="PageTrainer"
       Name="pageNameCalc"
       >
+    
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0.8"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppBlueColor}"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="#585555"/>
+        </Style>
 
-    <Grid>
+        <Style x:Key="btnCalculator" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0.4"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppBlueColor}"/>
+            <Setter Property="FontSize" Value="21"/>
+            <Setter Property="Foreground" Value="{StaticResource AppBlueColor}"/>
+        </Style>
+
+        <Style x:Key="btnCheck" TargetType="Button" BasedOn="{StaticResource btnCalculator}">
+            <Setter Property="FontSize" Value="14"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsLastPage}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsLastPage}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="btnPagination" TargetType="Button" BasedOn="{StaticResource btnCalculator}">
+            <Setter Property="FontSize" Value="14"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsVisiblePaginationButtons}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsVisiblePaginationButtons}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="10,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
@@ -21,8 +64,78 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Frame x:Name="CalculatorContener" Grid.RowSpan="2"/>
-        <Frame x:Name="GridInputContener" Grid.Column="1"/>
+        <Grid Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.7*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
+            <!--Поле для ввода пользовательской функции-->
+            <Button Style="{StaticResource btnCalculator}" Content="+" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,5" Background="{StaticResource AppBlueColor}" Foreground="White" Click="AddFunc"/>
+            <TextBox x:Name="txtFunc" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,0,0,5" AcceptsReturn="True"/>
+
+            <!--Кнопки калькулятора-->
+
+            <!--Первая строка кнопок сверху-->
+            <Button Style="{StaticResource btnCalculator}" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1"   Click="Clear"/>
+            <Button Style="{StaticResource btnCalculator}" Content="(" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1"   Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content=")" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="1"   Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="⌫" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1" FontSize="18" Click="RemoveLastElement"/>
+            <!--Вторая строка кнопок сверху-->
+            <Button Style="{StaticResource btnCalculator}" Content="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Foreground="{StaticResource AppGreyText}"  Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="¬" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2" FontSize="30"  Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="↔" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="2" FontSize="30" Click="Button_Click"/>
+            <!--Третья строка кнопок сверху-->
+            <Button Style="{StaticResource btnCalculator}" Content="J" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="3" Foreground="{StaticResource AppGreyText}" Click="Button_Click" />
+            <Button Style="{StaticResource btnCalculator}" Content="H" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="3" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="3" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="→" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="3"  FontSize="30" Click="Button_Click"/>
+            <!--Четвертая строка кнопок сверху-->
+            <Button Style="{StaticResource btnCalculator}" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="4" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="4" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="∨" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="4"  FontSize="30"  Click="Button_Click"/>
+            <!--Пятая строка кнопок сверху-->
+            <Button Style="{StaticResource btnCalculator}" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="5" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="5" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="5" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="∧" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="5" FontSize="30"  Click="Button_Click"/>
+            <!--Шестая строка кнопок сверху-->
+            <Button Style="{StaticResource btnCalculator}" Content="↓" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="6" FontSize="30"  Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="⊕" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" FontSize="26" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="|" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="6" FontSize="24" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="=" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="6" Background="{StaticResource AppBlueColor}" Foreground="White"  FontSize="40"  Click="ResultAdding"/>
+
+        </Grid>
+
+        <Frame x:Name="GridInputContener" LoadCompleted="GridInputContener_LoadCompleted" Grid.Column="1"/>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource btnCheck}" Content="🔍" Uid="forward" Click="CheckResults" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Button Style="{StaticResource btnPagination}" Content="◁" Uid="backward" Click="Pagination" Grid.Row="1" Grid.Column="0"/>
+            <Button Style="{StaticResource btnPagination}" Content="▷" Uid="forward" Click="Pagination" Grid.Row="1" Grid.Column="1"/>
+            
+        </Grid>
+        
     </Grid>
 </Page>

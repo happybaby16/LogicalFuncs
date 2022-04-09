@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicalFuncs.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,13 @@ namespace LogicalFuncs.pages.trainer
     /// </summary>
     public partial class PageLogicalFuncsCalculator : Page
     {
+        ViewModelTrainer VMT;
         List<string> parsedFuncs = new List<string>();
-        public PageLogicalFuncsCalculator()
+        public PageLogicalFuncsCalculator(ViewModelTrainer VMT)
         {
             InitializeComponent();
+            this.VMT = VMT;
+            DataContext = VMT;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
