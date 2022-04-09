@@ -1,5 +1,6 @@
 ﻿using LogicalFuncs.ViewModel;
 using LogicalFuncs.ViewModel.Patterns;
+using LogicalFuncs.windows.trainer;
 using LogicFuncs.Model;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,9 @@ namespace LogicalFuncs.pages.trainer
     public partial class PageTrainer : Page
     {
         ViewModelTrainer VMT = new ViewModelTrainer();
+
+        //Страница с анимацией загрузки
+        PageStartTrainer startTrainer = new PageStartTrainer();
 
         List<PageGridInput> inputGrid=new List<PageGridInput>();
 
@@ -100,6 +104,7 @@ namespace LogicalFuncs.pages.trainer
             else
             {
                 GridInputContener.Content = null;
+                GridInputContener.Navigate(startTrainer);
             }
         }
 
@@ -148,6 +153,8 @@ namespace LogicalFuncs.pages.trainer
                     errors.Add(resultCheck);
                 }
             }
+            WindowTrainerErrors errorsWindow = new WindowTrainerErrors(parsedFuncs, errors);
+            errorsWindow.Show();
         }
     }
 }

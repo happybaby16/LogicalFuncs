@@ -88,6 +88,9 @@
     <Compile Include="ViewModel\Patterns\TrainerError.cs" />
     <Compile Include="ViewModel\ViewModelMenu.cs" />
     <Compile Include="ViewModel\ViewModelTrainer.cs" />
+    <Compile Include="windows\trainer\WindowTrainerErrors.xaml.cs">
+      <DependentUpon>WindowTrainerErrors.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -125,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\trainer\PageTrainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\trainer\WindowTrainerErrors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

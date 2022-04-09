@@ -120,17 +120,25 @@ namespace LogicalFuncs.pages.trainer
             {
                 for (int j = 0; j < cellGridInput[0].Count; j++)
                 {
-                    if(Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][j].Text)) != Func.CalculationLogs[i][j].ResultValue)
+                    try
                     {
-                        if (j < Func.VariableNames.Count)
+                        if (Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][j].Text)) != Func.CalculationLogs[i][j].ResultValue)
                         {
-                            detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
-                        }
-                        else
-                        {
-                            detectedErrors.Add(new TrainerError(Func.LogicalFunc, Func.CalculationLogs[i][j],j+1,i+1));
+                            if (j < Func.VariableNames.Count)
+                            {
+                                detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
+                            }
+                            else
+                            {
+                                detectedErrors.Add(new TrainerError(Func.LogicalFunc, Func.CalculationLogs[i][j], j + 1, i + 1));
+                            }
                         }
                     }
+                    catch
+                    {
+                        detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
+                    }
+                   
                 }
             }
 

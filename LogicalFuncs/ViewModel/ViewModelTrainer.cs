@@ -49,6 +49,7 @@ namespace LogicalFuncs.ViewModel
                     MessageBox.Show($"Ошибка в написании логической функции: {logicalFunc}");
                     resultCalculation.Clear();
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MaxPages"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsLastPage"));
                     break;
                 }
             }
@@ -67,13 +68,19 @@ namespace LogicalFuncs.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsLastPage"));
             }
         }
-        public int MaxPages { get => GetResultCalculation.Count - 1; }
+        public int MaxPages
+        {
+            get 
+            {
+                return GetResultCalculation.Count - 1;
+            }
+        }
 
         public bool IsLastPage
         {
             get 
             {
-                if (CurrentPage == MaxPages) return true;
+                if (CurrentPage == MaxPages && MaxPages>-1) return true;
                 else return false;
             }
         }

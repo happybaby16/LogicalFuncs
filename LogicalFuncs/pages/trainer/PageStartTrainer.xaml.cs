@@ -20,9 +20,30 @@ namespace LogicalFuncs.pages.trainer
     /// </summary>
     public partial class PageStartTrainer : Page
     {
+        List<TextBlock> animationRectangle = new List<TextBlock>();
         public PageStartTrainer()
         {
             InitializeComponent();
+            LoadAnimation();
+        }
+
+        private async void LoadAnimation()
+        {
+            animationRectangle.Add(rectOne);
+            animationRectangle.Add(rectTwo);
+            animationRectangle.Add(rectThree);
+            while (true)
+            {
+                foreach (TextBlock itemFocuse in animationRectangle)
+                {
+                    foreach (TextBlock itemUnfocuse in animationRectangle)
+                    {
+                        itemUnfocuse.Opacity = 0.5;
+                    }
+                    itemFocuse.Opacity = 1;
+                    await Task.Delay(100);
+                }
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace LogicalFuncs.ViewModel.Patterns
         public TrainerError(string logicalFunc, int column, int row)
         {
             Type = TypeError.ErrorTable;
-            ErrorMessage = $"Заполнение таблицы функции {logicalFunc}. Строка {row}, столбец {column}: ошибка заполнения начальных данных";
+            ErrorMessage = $"Заполнение таблицы функции {logicalFunc}. Строка {row}, столбец {column}: ошибка заполнения данных";
         }
 
         public TrainerError(string logicalFunc, string classes, string classesAbout)
