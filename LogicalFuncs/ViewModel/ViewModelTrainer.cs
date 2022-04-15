@@ -80,7 +80,7 @@ namespace LogicalFuncs.ViewModel
         {
             get 
             {
-                if (CurrentPage == MaxPages && MaxPages>-1) return true;
+                if (CurrentPage == MaxPages && MaxPages!=-1) return true;
                 else return false;
             }
         }

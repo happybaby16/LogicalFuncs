@@ -49,6 +49,15 @@ namespace LogicalFuncs.pages.trainer
         private void Clear(object sender, RoutedEventArgs e)
         {
             txtFunc.Text = string.Empty;
+            VMT.InputLogicalFuncs = new List<string>();
+            VMT.CurrentPage = 0;
+            GridInputContener.Content = null;
+            GridInputContener.Navigate(startTrainer);
+
+            //Очищаем память от предыдущих примеров
+            GC.GetTotalMemory(false);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void RemoveLastElement(object sender, RoutedEventArgs e)
@@ -106,6 +115,11 @@ namespace LogicalFuncs.pages.trainer
                 GridInputContener.Content = null;
                 GridInputContener.Navigate(startTrainer);
             }
+
+            //Очищаем память от предыдущих примеров
+            GC.GetTotalMemory(false);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void Pagination(object sender, RoutedEventArgs e)

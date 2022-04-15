@@ -7,14 +7,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageGridInput"
-      Margin="10,0">
+      Margin="5,0"
+      >
 
     <Page.Resources>
         <Style TargetType="TextBox">
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="BorderThickness" Value="0.4"/>
-            <Setter Property="BorderBrush" Value="#585555"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppGreyText}"/>
+            <Setter Property="Foreground" Value="{StaticResource AppGreyText}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
         <Style TargetType="TextBlock">
@@ -67,12 +69,14 @@
     
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-            <TextBlock x:Name="txtFunc" Background="{StaticResource AppBlueColor}"/>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+        <DockPanel Background="{StaticResource AppBlueColor}" Margin="0,0,0,10">
+            <TextBlock x:Name="txtFunc" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </DockPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
                 <Grid x:Name="gridInput"/>
             </ScrollViewer>
             <ScrollViewer  Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">

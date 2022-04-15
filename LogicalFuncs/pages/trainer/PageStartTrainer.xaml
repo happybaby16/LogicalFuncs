@@ -10,11 +10,13 @@
 
     <Grid>
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock x:Name="rectOne" Text="■" Foreground="{StaticResource AppBlueColor}"/>
-                <TextBlock x:Name="rectTwo" Text="■" Foreground="{StaticResource AppBlueColor}"/>
-                <TextBlock x:Name="rectThree" Text="■" Foreground="{StaticResource AppBlueColor}"/>
-            </StackPanel>
+            <Canvas Height="20" Width="20">
+                <Line x:Name="verticalLineOne" X1="0" X2="0" Y1="0" Y2="20" StrokeThickness="0.5" Stroke="{StaticResource AppBlueColor}"/>
+                <Line x:Name="horizontalLineOne" X1="0" X2="20" Y1="20" Y2="20" StrokeThickness="0.5" Stroke="{StaticResource AppBlueColor}"/>
+
+                <Line x:Name="verticalLineTwo"  X1="20" X2="20" Y1="0" Y2="20" StrokeThickness="0.5" Stroke="{StaticResource AppBlueColor}"/>
+                <Line x:Name="horizontalLineTwo" X1="20" X2="0" Y1="0" Y2="0" StrokeThickness="0.5" Stroke="{StaticResource AppBlueColor}"/>
+            </Canvas>
             <TextBlock Text="Ожидание ввода..."/>
         </StackPanel>
     </Grid>

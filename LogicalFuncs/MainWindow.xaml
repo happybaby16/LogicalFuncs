@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogicalFuncs"
         mc:Ignorable="d"
-        Title="Супер пупер программа для нахождения значений логических функций при разных парметрах ПЛЮС БЕСПЛАТНО БЕЗ РЕГИСТАРЦИИ И СМС" Height="450" Width="800"
-        Background="White"
+        Title="Тренажер логичеких функций" 
+        Height="450" 
+        Width="800"
         MinWidth="1000"
         MinHeight="650"
        >
@@ -32,6 +33,7 @@
             <ColumnDefinition Width="{Binding WidthMenu}"/>
             <ColumnDefinition Width="84*"/>
         </Grid.ColumnDefinitions>
+
 
         <ScrollViewer CanContentScroll="False" VerticalScrollBarVisibility="Auto" Width="Auto">
         <StackPanel Background="{StaticResource AppBlueColor}">

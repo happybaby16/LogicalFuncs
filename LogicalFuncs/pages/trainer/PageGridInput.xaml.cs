@@ -102,12 +102,15 @@ namespace LogicalFuncs.pages.trainer
                 {
                     TextBox cell = new TextBox();
                     cell.MinWidth = 30;
+                    if (j < variables.Count)
+                    {
+                        cell.Text = Convert.ToString(Convert.ToInt32(Func.CalculationLogs[i-1][j].ResultValue));
+                    }
                     Grid.SetRow(cell, i);
                     Grid.SetColumn(cell, j);
                     gridInput.Children.Add(cell);
                     cellGridInput[i - 1].Add(cell);
                 }
-                
             }
 
 
@@ -115,6 +118,28 @@ namespace LogicalFuncs.pages.trainer
 
         public List<TrainerError> GetErrors()
         {
+            GradientStopCollection colorFalse = new GradientStopCollection();
+            colorFalse.Add(new GradientStop() { Color = Color.FromArgb(100, 255, 0, 0), Offset = 0.0 });
+            colorFalse.Add(new GradientStop() { Color = Color.FromArgb(0, 255, 0, 0), Offset = 0.1 });
+            colorFalse.Add(new GradientStop() { Color = Color.FromArgb(0, 0, 0, 0), Offset = 1 });
+
+            GradientStopCollection colorTrue = new GradientStopCollection();
+            colorTrue.Add(new GradientStop() { Color = Color.FromArgb(100, 0, 255, 0), Offset = 0.0 });
+            colorTrue.Add(new GradientStop() { Color = Color.FromArgb(0, 0, 255, 0), Offset = 0.1 });
+            colorTrue.Add(new GradientStop() { Color = Color.FromArgb(0, 0, 0, 0), Offset = 1 });
+
+            LinearGradientBrush linerColorFalse = new LinearGradientBrush(colorFalse, 0)
+            {
+                StartPoint = new Point(0.75, 1),
+                EndPoint = new Point(0, 0),
+            };
+
+            LinearGradientBrush linerColorTrue = new LinearGradientBrush(colorTrue, 0)
+            {
+                StartPoint = new Point(0.75, 1),
+                EndPoint = new Point(0, 0),
+            };
+
             List<TrainerError> detectedErrors = new List<TrainerError>();
             for (int i = 0; i < cellGridInput.Count; i++)
             {
@@ -124,6 +149,7 @@ namespace LogicalFuncs.pages.trainer
                     {
                         if (Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][j].Text)) != Func.CalculationLogs[i][j].ResultValue)
                         {
+                            cellGridInput[i][j].Background = linerColorFalse;
                             if (j < Func.VariableNames.Count)
                             {
                                 detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
@@ -133,12 +159,17 @@ namespace LogicalFuncs.pages.trainer
                                 detectedErrors.Add(new TrainerError(Func.LogicalFunc, Func.CalculationLogs[i][j], j + 1, i + 1));
                             }
                         }
+                        else
+                        {
+                            cellGridInput[i][j].Background = linerColorTrue;
+                        }
                     }
                     catch
                     {
+                        cellGridInput[i][j].Background = linerColorFalse;
+
                         detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
                     }
-                   
                 }
             }
 

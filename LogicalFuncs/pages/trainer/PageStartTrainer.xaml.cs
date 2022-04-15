@@ -20,7 +20,8 @@ namespace LogicalFuncs.pages.trainer
     /// </summary>
     public partial class PageStartTrainer : Page
     {
-        List<TextBlock> animationRectangle = new List<TextBlock>();
+        List<Line> vertLines = new List<Line>();
+        List<Line> horizLines = new List<Line>();
         public PageStartTrainer()
         {
             InitializeComponent();
@@ -29,21 +30,33 @@ namespace LogicalFuncs.pages.trainer
 
         private async void LoadAnimation()
         {
-            animationRectangle.Add(rectOne);
-            animationRectangle.Add(rectTwo);
-            animationRectangle.Add(rectThree);
+            vertLines.Add(verticalLineOne);
+            vertLines.Add(verticalLineTwo);
+
+            horizLines.Add(horizontalLineOne);
+            horizLines.Add(horizontalLineTwo);
+
             while (true)
             {
-                foreach (TextBlock itemFocuse in animationRectangle)
+                for (int i = 0; i < 20; i+=2)
                 {
-                    foreach (TextBlock itemUnfocuse in animationRectangle)
-                    {
-                        itemUnfocuse.Opacity = 0.5;
-                    }
-                    itemFocuse.Opacity = 1;
-                    await Task.Delay(100);
+                    vertLines[0].Y2 = i;
+                    vertLines[1].Y1 = i;
+                    horizLines[0].X1 = i;
+                    horizLines[1].X1 = i;
+                    await Task.Delay(20);
+                }
+
+                for (int i = 20; i > -1; i -= 2)
+                {
+                    vertLines[0].Y2 = i;
+                    vertLines[1].Y1 = i;
+                    horizLines[0].X1 = i;
+                    horizLines[1].X1 = i;
+                    await Task.Delay(20);
                 }
             }
         }
+
     }
 }
