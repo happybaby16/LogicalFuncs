@@ -14,7 +14,7 @@
         <Style TargetType="TextBox">
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="BorderThickness" Value="0.4"/>
+            <Setter Property="BorderThickness" Value="0.6"/>
             <Setter Property="BorderBrush" Value="{StaticResource AppGreyText}"/>
             <Setter Property="Foreground" Value="{StaticResource AppGreyText}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>

@@ -29,6 +29,10 @@ namespace LogicalFuncs.pages.trainer
         List<List<TextBox>> cellGridInput = new List<List<TextBox>>();
         List<TextBlock> headerGridInput = new List<TextBlock>();
         List<DockPanel> backgroundHeaders = new List<DockPanel>();
+
+
+        LinearGradientBrush linerColorFalse;
+        LinearGradientBrush linerColorTrue;
         GridLength size = new GridLength(1, GridUnitType.Star);
         public PageGridInput(ViewModelTrainer VMT, LogicFuncCalculator Func)
         {
@@ -45,6 +49,20 @@ namespace LogicalFuncs.pages.trainer
             {
                 GenerateGridInput(Func.VariableNames, 1);
             }
+        }
+
+
+        private void ContentCell(object sender, EventArgs e)
+        {
+            TextBox obj = (TextBox)sender;
+            if (obj.Text == string.Empty || obj.Text == "1" || obj.Text == "0")
+            {
+            }
+            else
+            {
+                obj.Text = string.Empty;
+            }
+           
         }
 
         private async void GenerateGridInput(List<string> variables, int countMoves)
@@ -107,6 +125,7 @@ namespace LogicalFuncs.pages.trainer
                 for (int j = 0; j < variables.Count + countMoves; j++)
                 {
                     TextBox cell = new TextBox();
+                    cell.TextChanged += ContentCell;
                     cell.MinWidth = 30;
                     if (j < variables.Count)
                     {
@@ -134,18 +153,19 @@ namespace LogicalFuncs.pages.trainer
             colorTrue.Add(new GradientStop() { Color = Color.FromArgb(0, 0, 255, 0), Offset = 0.1 });
             colorTrue.Add(new GradientStop() { Color = Color.FromArgb(0, 0, 0, 0), Offset = 1 });
 
-            LinearGradientBrush linerColorFalse = new LinearGradientBrush(colorFalse, 0)
+            linerColorFalse = new LinearGradientBrush(colorFalse, 0)
             {
                 StartPoint = new Point(0.75, 1),
                 EndPoint = new Point(0, 0),
             };
 
-            LinearGradientBrush linerColorTrue = new LinearGradientBrush(colorTrue, 0)
+            linerColorTrue = new LinearGradientBrush(colorTrue, 0)
             {
                 StartPoint = new Point(0.75, 1),
                 EndPoint = new Point(0, 0),
             };
 
+            List<int> columnsWithError = new List<int>();
             List<TrainerError> detectedErrors = new List<TrainerError>();
             if (!Func.IsUserHaveAnswer)
             {
@@ -166,6 +186,7 @@ namespace LogicalFuncs.pages.trainer
                                 {
                                     detectedErrors.Add(new TrainerError(Func.LogicalFunc, Func.CalculationLogs[i][j], j + 1, i + 1));
                                 }
+                                columnsWithError.Add(j);
                             }
                             else
                             {
@@ -174,45 +195,84 @@ namespace LogicalFuncs.pages.trainer
                         }
                         catch
                         {
-                            cellGridInput[i][j].Background = linerColorFalse;
-
+                            columnsWithError.Add(j);
                             detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
                         }
                     }
+                }
+
+                columnsWithError = columnsWithError.Distinct().ToList();
+                foreach (int columError in columnsWithError)
+                {
+                    SetErrorColumn(columError);
                 }
             }
             else
             {
                 int lastColumn = Func.VariableNames.Count;
-                Func.Answer = new List<bool>();
+                Func.Answer.Clear();
                 for (int i = 0; i < Math.Pow(2, Func.VariableNames.Count); i++)
                 {
-                    Func.Answer.Add(Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][lastColumn].Text)));
+                    try
+                    {
+                        Func.Answer.Add(Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][lastColumn].Text)));
+                    }
+                    catch
+                    {
+                        detectedErrors.Add(new TrainerError(Func.LogicalFunc, TypeError.ErrorAnswerNull, "Заполнение таблицы. Проверьте правильность введенных даннных."));
+                        SetErrorColumn(lastColumn);
+                        Func.Answer.Clear();
+                        break;
+                    }
+                }
+                if (Func.Answer.Count != 0)
+                {
+                    SetNullColorColumn(lastColumn);
                 }
             }
 
-
-            if (classSaveZero.IsChecked != Func.IsSavedZero)
+            if (Func.Answer.Count == Math.Pow(2, Func.VariableNames.Count))
             {
-                detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K0", "сохраняет константу 0"));
-            }
+                if (classSaveZero.IsChecked != Func.IsSavedZero)
+                {
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K0", "сохраняет константу 0"));
+                }
 
-            if (classSaveOne.IsChecked != Func.IsSavedOne)
-            {
-                detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K1", "сохраняет константу 1"));
-            }
+                if (classSaveOne.IsChecked != Func.IsSavedOne)
+                {
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K1", "сохраняет константу 1"));
+                }
 
-            if (classSelfDual.IsChecked != Func.IsSelfDual)
-            {
-                detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kс", "самодвойственная функция"));
-            }
+                if (classSelfDual.IsChecked != Func.IsSelfDual)
+                {
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kс", "самодвойственная функция"));
+                }
 
-            if (classMonotony.IsChecked != Func.IsMonotony)
-            {
-                detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kм", "монотонная функция"));
+                if (classMonotony.IsChecked != Func.IsMonotony)
+                {
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kм", "монотонная функция"));
+                }
             }
 
             return detectedErrors;
+        }
+
+
+
+        private void SetErrorColumn(int columWithError)
+        {
+            for (int i = 0; i < Math.Pow(2, Func.VariableNames.Count); i++)
+            {
+                cellGridInput[i][columWithError].Background = linerColorFalse;
+            }
+        }
+
+        private void SetNullColorColumn(int columWithError)
+        {
+            for (int i = 0; i < Math.Pow(2, Func.VariableNames.Count); i++)
+            {
+                cellGridInput[i][columWithError].Background = null ;
+            }
         }
 
     }

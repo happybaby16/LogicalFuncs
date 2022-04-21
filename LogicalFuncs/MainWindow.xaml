@@ -35,47 +35,57 @@
         </Grid.ColumnDefinitions>
 
 
-        <ScrollViewer CanContentScroll="False" VerticalScrollBarVisibility="Auto" Width="Auto">
-        <StackPanel Background="{StaticResource AppBlueColor}">
-                <StackPanel HorizontalAlignment="Left" Margin="10" Orientation="Vertical">
+        <ScrollViewer CanContentScroll="False" VerticalScrollBarVisibility="Auto" Width="Auto" Background="{StaticResource AppBlueColor}">
+            
+            <!--Пункты меню-->
+            <DockPanel LastChildFill="False" Margin="10">
                 <!--Кнопка меню-->
-                <Image  Source="../../images/icons/Burger.png" Margin="10,0,0,0" Width="15" Height="12" HorizontalAlignment="Left">
-                        <Image.InputBindings>
-                            <MouseBinding Gesture="LeftClick" Command="{Binding MenuMoveCommand}" />
-                        </Image.InputBindings>
+                <Image DockPanel.Dock="Top"  Source="../../images/icons/Burger.png" Margin="10,0,0,0" Width="15" Height="12" HorizontalAlignment="Left">
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding MenuMoveCommand}" />
+                    </Image.InputBindings>
                 </Image>
-                
-                <!--Пункты меню-->
-                <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTheory, Path=Text}">
-                        <Image  Source="../../images/icons/theory_icon.png" Width="35" Height="25" >
-                            <Image.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
-                            </Image.InputBindings>
-                        </Image>
-                        <TextBlock x:Name="txtTheory" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Теория</TextBlock>
-                    </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtPractice, Path=Text}">
-                        <Image  Source="../../images/icons/practice_icon.png" Width="35" Height="25" >
-                            <Image.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
-                            </Image.InputBindings>
-                        </Image>
-                        <TextBlock x:Name="txtPractice" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Практика</TextBlock>
-                    </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
-                            <Image  Source="../../images/icons/logicalfuncs_icon.png" Width="35" Height="25" >
-                                <Image.InputBindings>
-                                    <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
-                                </Image.InputBindings>
-                            </Image>
-                            <TextBlock x:Name="txtTrainer" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Тренажер</TextBlock>
-                        </StackPanel>
-                    </StackPanel>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTheory, Path=Text}">
+                    <Image  Source="../../images/icons/theory_icon.png" Width="35" Height="25" >
+                        <Image.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
+                        </Image.InputBindings>
+                    </Image>
+                    <TextBlock x:Name="txtTheory" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Теория</TextBlock>
                 </StackPanel>
-        </StackPanel>
+
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtPractice, Path=Text}">
+                    <Image  Source="../../images/icons/practice_icon.png" Width="35" Height="25" >
+                        <Image.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
+                        </Image.InputBindings>
+                    </Image>
+                    <TextBlock x:Name="txtPractice" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Практика</TextBlock>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
+                    <Image  Source="../../images/icons/logicalfuncs_icon.png" Width="35" Height="25" >
+                        <Image.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
+                        </Image.InputBindings>
+                    </Image>
+                    <TextBlock x:Name="txtTrainer" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Тренажер</TextBlock>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Bottom" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
+                    <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" FontSize="11" TextWrapping="Wrap">
+                        <Run>0101101101</Run>
+                    </TextBlock>
+                    
+                    <!--<Image  Width="35" Height="25" >
+                        <Image.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
+                        </Image.InputBindings>
+                    </Image>-->
+                    <TextBlock  Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Калькулятор</TextBlock>
+                </StackPanel>
+            </DockPanel>
         </ScrollViewer>
         
         <!--Контейнер загрузки страниц-->

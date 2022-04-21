@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LogicalFuncs.ViewModel.Patterns
 {
-    public enum TypeError { ErrorTable=0, ErrorClasses=1, ErrorCompleteness=2}
+    public enum TypeError { ErrorTable=0, ErrorClasses=1, ErrorCompleteness=2, ErrorAnswerNull=3}
     public class TrainerError
     {
         public TypeError Type { get; set; }
@@ -27,13 +27,15 @@ namespace LogicalFuncs.ViewModel.Patterns
         public TrainerError(string logicalFunc, string classes, string classesAbout)
         {
             Type = TypeError.ErrorClasses;
-            ErrorMessage = $"Определение замкнутого класса {classes} функции {logicalFunc}: {classesAbout}";
+            ErrorMessage = $"Определение замкнутого класса {classes} функции {logicalFunc}: {classesAbout}.";
         }
 
-        public TrainerError(string logicalFunc)
+        public TrainerError(string logicalFunc, TypeError typeError, string messageError)
         {
-            Type = TypeError.ErrorCompleteness;
-            ErrorMessage = $"Определение полноты функции {logicalFunc}";
+            Type = typeError;
+            ErrorMessage = messageError;
         }
+
+
     }
 }
