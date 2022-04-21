@@ -28,25 +28,43 @@ namespace LogicFuncs.Model
             get 
             {
                 if(TypeValue.Operation == Type)
-                switch (Value.ToString())
-                {
-                    case "¬":
-                        return 1;
-                    case "|":
-                        return 2;
-                    case "↓":
-                        return 2;
-                    case "∧":
-                        return 3;
-                    case "∨":
-                        return 4;
-                    case "⊕":
-                        return 4;
-                    case "→":
-                        return 5;
-                    case "↔":
-                        return 6;
-                }
+                    switch (Value.ToString())
+                    {
+                        case "¬":
+                            return 1;
+                        case "˜":
+                            return 1;
+                        case "!":
+                            return 1;
+                        case "|":
+                            return 2;
+                        case "↓":
+                            return 2;
+                        case "∧":
+                            return 3;
+                        case "•":
+                            return 3;
+                        case "&":
+                            return 3;
+                        case "∨":
+                            return 4;
+                        case "+":
+                            return 4;
+                        case "⊕":
+                            return 4;
+                        case "→":
+                            return 5;
+                        case "⇒":
+                            return 5;
+                        case "⊃":
+                            return 5;
+                        case "↔":
+                            return 6;
+                        case "⇔":
+                            return 6;
+                        case "≡":
+                            return 6;
+                    }
                 return -1;//Error code (Not operation)
             }
         }
@@ -64,17 +82,37 @@ namespace LogicFuncs.Model
                         return Operation.PierArrow;
                     case "¬":
                         return Operation.Inversion;
+                    case "˜":
+                        return Operation.Inversion;
+                    case "!":
+                        return Operation.Inversion;
                     case "∧":
+                        return Operation.Conjunction;
+                    case "•":
+                        return Operation.Conjunction;
+                    case "&":
                         return Operation.Conjunction;
                     case "∨":
                         return Operation.Disjunction;
+                    case "+":
+                        return Operation.Disjunction;
                     case "⊕":
+                        return Operation.SumModulo;
+                    case "⊻":
                         return Operation.SumModulo;
                     case "→":
                         return Operation.Implication;
+                    case "⇒":
+                        return Operation.Implication;
+                    case "⊃":
+                        return Operation.Implication;
                     case "↔":
                         return Operation.Equivalence;
-                }
+                    case "⇔":
+                        return Operation.Equivalence;
+                    case "≡":
+                        return Operation.Equivalence;
+                    }
                 return Operation.NullOperation;//Error code (Not operation)
             }
         }
@@ -82,12 +120,21 @@ namespace LogicFuncs.Model
 
     public class LogicFuncCalculator
     {
-        public string LogicalFunc { get; set; }//Переменная, в которой хранится логическая функция
+        public string LogicalFunc { get; set; }//Содержит входную функцию
         public List<string> VariableNames { get; set; }
-        public List<bool> Answer { get; set; }
-        public List<string> OperationsPriority { get; set; }//Хранит строковое значение операций по убыванию решения
+        public List<bool> Answer { get; set; }//Содержит вектор функции (ответ)
+        public List<string> OperationsPriority { get; set; }//Содержит последовательность действий
         public List<List<LogicalFuncsLogs>> CalculationLogs { get; set; }
-        Regex operations = new Regex(@"→|↔|¬|∧|∨|⊕|\||↓");//Операции
+        public bool IsUserHaveAnswer 
+        {
+            get
+            {
+                if (operations.IsMatch(LogicalFunc)) return false;
+                return true;
+            }
+        }//Необходимо, если у пользователя есть вектор функции. Т.е. у пользователя нет конкрентной функции, но есть на неё ответ
+        
+        Regex operations = new Regex(@"→|↔|¬|∧|∨|⊕|\||↓|⇒|⊃|⇔|≡|˜|!|•|&|\+|⊻");//Операции
         Regex variables = new Regex(@"[0-1]");//Переменные
         Regex brackets = new Regex(@"\(|\)");//Скобки
         Regex variablesFunc = new Regex(@"[A-Z]|[a-z]|[0,1]");
@@ -179,7 +226,7 @@ namespace LogicFuncs.Model
                         {
                             while (operationsStack.Count > 0 && tokenExpression[i].GetPriority >= operationsStack.Peek().GetPriority && valuesStack.Count >= 1 && operationsStack.Peek().Value.ToString() != "(" && operationsStack.Peek().Value.ToString() != ")")
                             {
-                                if (operationsStack.Peek().Value.ToString() == "¬")
+                                if (operationsStack.Peek().GetOperation == Operation.Inversion)
                                 {
                                     LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
@@ -248,7 +295,7 @@ namespace LogicFuncs.Model
                         {
                             while (operationsStack.Peek().Value.ToString() != "(" && valuesStack.Count > 1)
                             {
-                                if (operationsStack.Peek().Value.ToString() == "¬")
+                                if (operationsStack.Peek().GetOperation == Operation.Inversion)
                                 {
                                     LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
@@ -303,7 +350,7 @@ namespace LogicFuncs.Model
                 //Завершение решения после прохождения строки
                 for (int i = 0; operationsStack.Count != 0; i++)
                 {
-                    if (operationsStack.Peek().Value.ToString() == "¬")
+                    if (operationsStack.Peek().GetOperation == Operation.Inversion)
                     {
                         LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
@@ -378,16 +425,20 @@ namespace LogicFuncs.Model
                     logicExpression = logicExpression.Replace(VariableNames[counter], Convert.ToString(bit));
                     counter++;
                 }
-                bool? answerExpression = CalculateExpression(logicExpression);
-                if (answerExpression != null)
+                //Считает значение логического выражения если у пользователя нет вектора фукнции
+                if (!IsUserHaveAnswer)
                 {
-                    Answer.Add(Convert.ToBoolean(answerExpression));
-                }
-                else
-                {
-                    //Ошибка в вводе логической функции
-                    Answer = null;
-                    return null;
+                    bool? answerExpression = CalculateExpression(logicExpression);
+                    if (answerExpression != null)
+                    {
+                        Answer.Add(Convert.ToBoolean(answerExpression));
+                    }
+                    else
+                    {
+                        //Ошибка в вводе логической функции
+                        Answer = null;
+                        return null;
+                    }
                 }
                 counter = 0;
             }
@@ -397,23 +448,25 @@ namespace LogicFuncs.Model
         /// <summary>
         /// Свойство, определяющее сохраняет ли булевая функция ноль
         /// </summary>
-        public bool IsSavedZero
+        public bool? IsSavedZero
         {
             get
             {
-                if (Answer != null && Answer[0] == false) return true;
-                else return false;
+                if (Answer == null || Answer.Count == 0) return null;
+                if (Answer[0] == false) return true;
+                else return false; 
             }
         }
 
         /// <summary>
         /// Свойство, определяющее сохраняет ли булевая функция единицу
         /// </summary>
-        public bool IsSavedOne
+        public bool? IsSavedOne
         {
             get
             {
-                if (Answer != null && Answer[Answer.Count - 1] == true) return true;
+                if (Answer == null || Answer.Count == 0) return null;
+                if (Answer[Answer.Count - 1] == true) return true;
                 else return false;
             }
         }
@@ -421,10 +474,11 @@ namespace LogicFuncs.Model
         /// <summary>
         /// Свойство, определяющее является ли булевая функция самодвойственной
         /// </summary>
-        public bool IsSelfDual
+        public bool? IsSelfDual
         {
             get
             {
+                if (Answer == null || Answer.Count == 0) return null;
                 for (int i = 0; i < Answer.Count / 2; i++)
                 {
                     if (Answer[i] == Answer[Answer.Count - 1 - i]) return false;
@@ -440,10 +494,11 @@ namespace LogicFuncs.Model
         /// <summary>
         /// Свойство, определяющее является ли булевая функция монотонной
         /// </summary>
-        public bool IsMonotony
+        public bool? IsMonotony
         {
             get
             {
+                if (Answer == null || Answer.Count == 0) return null;
                 int step = Convert.ToInt32(Math.Pow(2, VariableNames.Count - 1));
                 for (int i = 0; i < VariableNames.Count; i++)
                 {

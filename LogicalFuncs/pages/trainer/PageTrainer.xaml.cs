@@ -99,7 +99,7 @@ namespace LogicalFuncs.pages.trainer
             inputGrid = new List<PageGridInput>();
             foreach (LogicFuncCalculator func in VMT.GetResultCalculation)
             {
-                if (func.Answer != null)
+                if (func.Answer != null|| func.IsUserHaveAnswer)
                 {
                     inputGrid.Add(new PageGridInput(VMT, func));
                 }

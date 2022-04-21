@@ -131,7 +131,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource btnCheck}" Content="🔍" Uid="forward" Click="CheckResults" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0"/>
+            <Button Style="{StaticResource btnCheck}" Content="🔍" Uid="forward" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0" Click="CheckResults"/>
             <Button Style="{StaticResource btnPagination}" Content="◁" Uid="backward" Click="Pagination" Grid.Row="1" Grid.Column="0" Margin="5,0,0,0"/>
             <Button Style="{StaticResource btnPagination}" Content="▷" Uid="forward" Click="Pagination" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
             

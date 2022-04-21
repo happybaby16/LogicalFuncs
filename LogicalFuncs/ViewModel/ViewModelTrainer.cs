@@ -44,7 +44,8 @@ namespace LogicalFuncs.ViewModel
             {
                 resultCalculation.Add(new LogicFuncCalculator());
                 resultCalculation[resultCalculation.Count - 1].SetLogicFunc(logicalFunc);
-                if (resultCalculation[resultCalculation.Count - 1].StartCalculate() == null)
+                if (resultCalculation[resultCalculation.Count - 1].StartCalculate() == null&&
+                    resultCalculation[resultCalculation.Count - 1].IsUserHaveAnswer!=true)
                 {
                     MessageBox.Show($"Ошибка в написании логической функции: {logicalFunc}");
                     resultCalculation.Clear();

@@ -29,7 +29,6 @@ namespace LogicalFuncs.pages.trainer
         List<List<TextBox>> cellGridInput = new List<List<TextBox>>();
         List<TextBlock> headerGridInput = new List<TextBlock>();
         List<DockPanel> backgroundHeaders = new List<DockPanel>();
-        List<string> variables = new List<string>() { "A","B", "C"};
         GridLength size = new GridLength(1, GridUnitType.Star);
         public PageGridInput(ViewModelTrainer VMT, LogicFuncCalculator Func)
         {
@@ -38,7 +37,14 @@ namespace LogicalFuncs.pages.trainer
             this.VMT = VMT;
             this.Func = Func;
             DataContext = VMT;
-            GenerateGridInput(Func.VariableNames, Func.CalculationLogs[0].Count-Func.VariableNames.Count);
+            if (!Func.IsUserHaveAnswer)
+            {
+                GenerateGridInput(Func.VariableNames, Func.CalculationLogs[0].Count - Func.VariableNames.Count);
+            }
+            else
+            {
+                GenerateGridInput(Func.VariableNames, 1);
+            }
         }
 
         private async void GenerateGridInput(List<string> variables, int countMoves)
@@ -141,37 +147,50 @@ namespace LogicalFuncs.pages.trainer
             };
 
             List<TrainerError> detectedErrors = new List<TrainerError>();
-            for (int i = 0; i < cellGridInput.Count; i++)
+            if (!Func.IsUserHaveAnswer)
             {
-                for (int j = 0; j < cellGridInput[0].Count; j++)
+                for (int i = 0; i < cellGridInput.Count; i++)
                 {
-                    try
+                    for (int j = 0; j < cellGridInput[0].Count; j++)
                     {
-                        if (Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][j].Text)) != Func.CalculationLogs[i][j].ResultValue)
+                        try
                         {
-                            cellGridInput[i][j].Background = linerColorFalse;
-                            if (j < Func.VariableNames.Count)
+                            if (Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][j].Text)) != Func.CalculationLogs[i][j].ResultValue)
                             {
-                                detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
+                                cellGridInput[i][j].Background = linerColorFalse;
+                                if (j < Func.VariableNames.Count)
+                                {
+                                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
+                                }
+                                else
+                                {
+                                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, Func.CalculationLogs[i][j], j + 1, i + 1));
+                                }
                             }
                             else
                             {
-                                detectedErrors.Add(new TrainerError(Func.LogicalFunc, Func.CalculationLogs[i][j], j + 1, i + 1));
+                                cellGridInput[i][j].Background = linerColorTrue;
                             }
                         }
-                        else
+                        catch
                         {
-                            cellGridInput[i][j].Background = linerColorTrue;
-                        }
-                    }
-                    catch
-                    {
-                        cellGridInput[i][j].Background = linerColorFalse;
+                            cellGridInput[i][j].Background = linerColorFalse;
 
-                        detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
+                            detectedErrors.Add(new TrainerError(Func.LogicalFunc, j + 1, i + 1));
+                        }
                     }
                 }
             }
+            else
+            {
+                int lastColumn = Func.VariableNames.Count;
+                Func.Answer = new List<bool>();
+                for (int i = 0; i < Math.Pow(2, Func.VariableNames.Count); i++)
+                {
+                    Func.Answer.Add(Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][lastColumn].Text)));
+                }
+            }
+
 
             if (classSaveZero.IsChecked != Func.IsSavedZero)
             {
