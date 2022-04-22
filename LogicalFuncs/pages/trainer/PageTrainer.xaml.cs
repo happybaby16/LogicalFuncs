@@ -39,7 +39,6 @@ namespace LogicalFuncs.pages.trainer
             GridInputContener.Navigate(new PageStartTrainer());
         }
 
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button obj = (Button)sender;
@@ -94,6 +93,7 @@ namespace LogicalFuncs.pages.trainer
                     parsedFuncs.Add(funcString);
                 }
             }
+
             //Валидация введенных функций
             VMT.InputLogicalFuncs = parsedFuncs;
             inputGrid = new List<PageGridInput>();
@@ -104,6 +104,17 @@ namespace LogicalFuncs.pages.trainer
                     inputGrid.Add(new PageGridInput(VMT, func));
                 }
             }
+
+            //Перемещение кнопки при проверки результата при одной введенной функции
+            if (inputGrid.Count != 0 && inputGrid.Count == 1)
+            {
+                Grid.SetRow(btnForward, 1);
+            }
+            else
+            {
+                Grid.SetRow(btnForward, 0);
+            }
+
             //Выбираем первую таблицу первой функции
             if (inputGrid.Count != 0)
             {

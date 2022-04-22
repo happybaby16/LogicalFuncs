@@ -117,24 +117,47 @@ namespace LogicalFuncs.pages.trainer
                 backgroundHeaders.Add(background);
             }
 
-           
+
             //Генерируем контент таблицы
+            //for (int i = 1; i < Math.Pow(2, variables.Count) + 1; i++)
+            //{
+            //    cellGridInput.Add(new List<TextBox>());
+            //    for (int j = 0; j < variables.Count + countMoves; j++)
+            //    {
+            //        TextBox cell = new TextBox();
+            //        cell.TextChanged += ContentCell;
+            //        cell.MinWidth = 30;
+            //        if (j < variables.Count)
+            //        {
+            //            cell.Text = Convert.ToString(Convert.ToInt32(Func.CalculationLogs[i - 1][j].ResultValue));
+            //        }
+            //        Grid.SetRow(cell, i);
+            //        Grid.SetColumn(cell, j);
+            //        gridInput.Children.Add(cell);
+            //        cellGridInput[i - 1].Add(cell);
+            //    }
+            //}
+
             for (int i = 1; i < Math.Pow(2, variables.Count) + 1; i++)
             {
                 cellGridInput.Add(new List<TextBox>());
-                for (int j = 0; j < variables.Count + countMoves; j++)
+            }
+
+            for (int j = 0; j < variables.Count + countMoves; j++)
+            {
+                for (int i = 0; i < Math.Pow(2, variables.Count); i++)
                 {
                     TextBox cell = new TextBox();
                     cell.TextChanged += ContentCell;
                     cell.MinWidth = 30;
                     if (j < variables.Count)
                     {
-                        cell.Text = Convert.ToString(Convert.ToInt32(Func.CalculationLogs[i-1][j].ResultValue));
+                        cell.Text = Convert.ToString(Convert.ToInt32(Func.CalculationLogs[i][j].ResultValue));
                     }
-                    Grid.SetRow(cell, i);
+                    Grid.SetRow(cell, i+1);
                     Grid.SetColumn(cell, j);
                     gridInput.Children.Add(cell);
-                    cellGridInput[i - 1].Add(cell);
+                    cellGridInput[i].Add(cell);
                 }
             }
 
@@ -231,7 +254,7 @@ namespace LogicalFuncs.pages.trainer
                 }
             }
 
-            if (Func.Answer.Count == Math.Pow(2, Func.VariableNames.Count))
+            if (Func.Answer.Count == Math.Pow(2, Func.VariableNames.Count) && VMT.IsClassesOn)
             {
                 if (classSaveZero.IsChecked != Func.IsSavedZero)
                 {

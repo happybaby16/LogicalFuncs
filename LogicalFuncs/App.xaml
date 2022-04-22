@@ -6,5 +6,8 @@
     <Application.Resources>
         <SolidColorBrush x:Key="AppBlueColor" Color="#1A76CE" />
         <SolidColorBrush x:Key="AppGreyText" Color="#585555" />
+        <SolidColorBrush x:Key="AppLightGrey" Color="#D3D3D3" />
+        <SolidColorBrush x:Key="AppMouseOver" Color="#BEE6FD" />
+        
     </Application.Resources>
 </Application>

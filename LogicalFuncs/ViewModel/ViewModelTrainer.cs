@@ -57,7 +57,7 @@ namespace LogicalFuncs.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsVisiblePaginationButtons"));
         }
 
-
+        #region Пагинация
         int currentPage = 0;
         public int CurrentPage {
             get => currentPage;
@@ -76,7 +76,6 @@ namespace LogicalFuncs.ViewModel
                 return GetResultCalculation.Count - 1;
             }
         }
-
         public bool IsLastPage
         {
             get 
@@ -85,7 +84,6 @@ namespace LogicalFuncs.ViewModel
                 else return false;
             }
         }
-
         public bool IsVisiblePaginationButtons
         {
             get 
@@ -94,8 +92,36 @@ namespace LogicalFuncs.ViewModel
                 else return false;
             }
         }
+        #endregion
 
-
+        #region Работа с классами функций
+        bool isClassesOn = false;
+        public bool IsClassesOn 
+        {
+            get
+            {
+                return isClassesOn;
+            }
+            set
+            {
+                isClassesOn = value;
+                isEnableAddFuncButton = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("IsEnableAddFuncButton"));
+            }
+        }
+        bool isEnableAddFuncButton = false;
+        public bool IsEnableAddFuncButton
+        {
+            get
+            {
+                return isEnableAddFuncButton;
+            }
+            set
+            {
+                isEnableAddFuncButton = value;
+            }
+        }
+        #endregion
 
 
     }

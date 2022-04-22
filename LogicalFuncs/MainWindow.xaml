@@ -47,29 +47,38 @@
                 </Image>
 
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTheory, Path=Text}">
-                    <Image  Source="../../images/icons/theory_icon.png" Width="35" Height="25" >
+                    <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" TextWrapping="Wrap">
+                        <Run>🕮</Run>
+                    </TextBlock>
+                    <!--<Image  Source="../../images/icons/theory_icon.png" Width="35" Height="25" >
                         <Image.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
                         </Image.InputBindings>
-                    </Image>
+                    </Image>-->
                     <TextBlock x:Name="txtTheory" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Теория</TextBlock>
                 </StackPanel>
 
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtPractice, Path=Text}">
-                    <Image  Source="../../images/icons/practice_icon.png" Width="35" Height="25" >
+                    <TextBlock Margin="9,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap">
+                        <Run>💡</Run>
+                    </TextBlock>
+                    <!--<Image  Source="../../images/icons/practice_icon.png" Width="35" Height="25" >
                         <Image.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
                         </Image.InputBindings>
-                    </Image>
-                    <TextBlock x:Name="txtPractice" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Практика</TextBlock>
+                    </Image>-->
+                    <TextBlock x:Name="txtPractice" Foreground="White" VerticalAlignment="Center" Margin="6,0,0,0">Практика</TextBlock>
                 </StackPanel>
 
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
-                    <Image  Source="../../images/icons/logicalfuncs_icon.png" Width="35" Height="25" >
+                    <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap">
+                        <Run>∧∨</Run>
+                    </TextBlock>
+                    <!--<Image  Source="../../images/icons/logicalfuncs_icon.png" Width="35" Height="25" >
                         <Image.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
                         </Image.InputBindings>
-                    </Image>
+                    </Image>-->
                     <TextBlock x:Name="txtTrainer" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Тренажер</TextBlock>
                 </StackPanel>
 
@@ -77,12 +86,6 @@
                     <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" FontSize="11" TextWrapping="Wrap">
                         <Run>0101101101</Run>
                     </TextBlock>
-                    
-                    <!--<Image  Width="35" Height="25" >
-                        <Image.InputBindings>
-                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
-                        </Image.InputBindings>
-                    </Image>-->
                     <TextBlock  Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Калькулятор</TextBlock>
                 </StackPanel>
             </DockPanel>
