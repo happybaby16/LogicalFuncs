@@ -26,8 +26,8 @@ namespace LogicalFuncs.pages.trainer
     {
         ViewModelTrainer VMT = new ViewModelTrainer();
 
-        //Страница с анимацией загрузки
-        PageStartTrainer startTrainer = new PageStartTrainer();
+        
+        PageStartTrainer startTrainer = new PageStartTrainer();//Страница с анимацией загрузки
 
         List<PageGridInput> inputGrid=new List<PageGridInput>();
 

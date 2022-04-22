@@ -298,5 +298,18 @@ namespace LogicalFuncs.pages.trainer
             }
         }
 
+        private async void ClassesPanel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            StackPanel obj = (StackPanel)sender;
+            int startMarginTop = 9;
+            obj.Opacity = 0;
+            obj.Margin = new Thickness(0, startMarginTop, 0, 0);
+            for (int i = 0; i < 10; i++)
+            {
+                obj.Opacity += 0.10;
+                obj.Margin = new Thickness(0, startMarginTop - i, 0, 0);
+                await Task.Delay(10);
+            }
+        }
     }
 }
