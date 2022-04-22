@@ -119,25 +119,6 @@ namespace LogicalFuncs.pages.trainer
 
 
             //Генерируем контент таблицы
-            //for (int i = 1; i < Math.Pow(2, variables.Count) + 1; i++)
-            //{
-            //    cellGridInput.Add(new List<TextBox>());
-            //    for (int j = 0; j < variables.Count + countMoves; j++)
-            //    {
-            //        TextBox cell = new TextBox();
-            //        cell.TextChanged += ContentCell;
-            //        cell.MinWidth = 30;
-            //        if (j < variables.Count)
-            //        {
-            //            cell.Text = Convert.ToString(Convert.ToInt32(Func.CalculationLogs[i - 1][j].ResultValue));
-            //        }
-            //        Grid.SetRow(cell, i);
-            //        Grid.SetColumn(cell, j);
-            //        gridInput.Children.Add(cell);
-            //        cellGridInput[i - 1].Add(cell);
-            //    }
-            //}
-
             for (int i = 1; i < Math.Pow(2, variables.Count) + 1; i++)
             {
                 cellGridInput.Add(new List<TextBox>());
@@ -162,6 +143,18 @@ namespace LogicalFuncs.pages.trainer
             }
 
 
+        }
+
+
+        public List<bool> GetClassesAnswer()
+        {
+            List<bool> answers = new List<bool>();
+            answers.Add(Convert.ToBoolean(classSaveZero.IsChecked));
+            answers.Add(Convert.ToBoolean(classSaveOne.IsChecked));
+            answers.Add(Convert.ToBoolean(classSelfDual.IsChecked));
+            answers.Add(Convert.ToBoolean(classLinear.IsChecked));
+            answers.Add(Convert.ToBoolean(classMonotony.IsChecked));
+            return answers;
         }
 
         public List<TrainerError> GetErrors()
@@ -270,6 +263,9 @@ namespace LogicalFuncs.pages.trainer
                 {
                     detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kс", "самодвойственная функция"));
                 }
+
+                if (classLinear.IsChecked != false)
+                { }
 
                 if (classMonotony.IsChecked != Func.IsMonotony)
                 {

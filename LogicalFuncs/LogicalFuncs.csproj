@@ -73,6 +73,9 @@
     <Compile Include="pages\theory\PageTheoryMenu.xaml.cs">
       <DependentUpon>PageTheoryMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\trainer\PageClasses.xaml.cs">
+      <DependentUpon>PageClasses.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\trainer\PageGridInput.xaml.cs">
       <DependentUpon>PageGridInput.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\theory\PageTheoryMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\trainer\PageClasses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

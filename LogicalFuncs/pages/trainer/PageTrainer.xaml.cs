@@ -29,7 +29,7 @@ namespace LogicalFuncs.pages.trainer
         
         PageStartTrainer startTrainer = new PageStartTrainer();//Страница с анимацией загрузки
 
-        List<PageGridInput> inputGrid=new List<PageGridInput>();
+        List<PageGridInput> inputGrid = new List<PageGridInput>();
 
         List<string> parsedFuncs = new List<string>();
         public PageTrainer()
@@ -180,6 +180,7 @@ namespace LogicalFuncs.pages.trainer
             }
             WindowTrainerErrors errorsWindow = new WindowTrainerErrors(parsedFuncs, errors);
             errorsWindow.Show();
+            GridInputContener.Navigate(new PageClasses(VMT, inputGrid));
         }
     }
 }
