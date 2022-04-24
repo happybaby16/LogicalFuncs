@@ -26,10 +26,9 @@ namespace LogicalFuncs.pages.trainer
     {
         ViewModelTrainer VMT = new ViewModelTrainer();
 
-        
         PageStartTrainer startTrainer = new PageStartTrainer();//Страница с анимацией загрузки
 
-        List<PageGridInput> inputGrid = new List<PageGridInput>();
+        List<dynamic> inputGrid = new List<dynamic>();//Контейнер для страниц
 
         List<string> parsedFuncs = new List<string>();
         public PageTrainer()
@@ -39,6 +38,7 @@ namespace LogicalFuncs.pages.trainer
             GridInputContener.Navigate(new PageStartTrainer());
         }
 
+        //Функция для записи символа нажатой кнопки в строку функции
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button obj = (Button)sender;
@@ -47,6 +47,7 @@ namespace LogicalFuncs.pages.trainer
 
         private void Clear(object sender, RoutedEventArgs e)
         {
+            inputGrid.Clear();
             txtFunc.Text = string.Empty;
             VMT.InputLogicalFuncs = new List<string>();
             VMT.CurrentPage = 0;
@@ -82,7 +83,7 @@ namespace LogicalFuncs.pages.trainer
 
         private async void ResultAdding(object sender, RoutedEventArgs e)
         {
-           
+
             //Парсим введенные функции
             parsedFuncs = new List<string>();
             string[] tempMassFuncs = txtFunc.Text.Replace("\r", string.Empty).Replace(" ", string.Empty).Split('\n');
@@ -96,30 +97,34 @@ namespace LogicalFuncs.pages.trainer
 
             //Валидация введенных функций
             VMT.InputLogicalFuncs = parsedFuncs;
-            inputGrid = new List<PageGridInput>();
+            inputGrid = new List<dynamic>();
             foreach (LogicFuncCalculator func in VMT.GetResultCalculation)
             {
-                if (func.Answer != null|| func.IsUserHaveAnswer)
+                if (func.Answer != null || func.IsUserHaveAnswer)
                 {
                     inputGrid.Add(new PageGridInput(VMT, func));
                 }
             }
 
+            if (VMT.IsClassesOn)
+            {
+                inputGrid.Add(new PageClasses(VMT, inputGrid));
+            }
+
             //Перемещение кнопки при проверки результата при одной введенной функции
             if (inputGrid.Count != 0 && inputGrid.Count == 1)
             {
-                Grid.SetRow(btnForward, 1);
+                ReplaceForwardButton();
             }
             else
             {
-                Grid.SetRow(btnForward, 0);
+                ReplaceForwardButton();
             }
 
             //Выбираем первую таблицу первой функции
             if (inputGrid.Count != 0)
             {
-                VMT.CurrentPage = 0;
-                GridInputContener.Navigate(inputGrid[VMT.CurrentPage]);
+                GoToPage(0);
             }
             else
             {
@@ -133,6 +138,7 @@ namespace LogicalFuncs.pages.trainer
             GC.WaitForPendingFinalizers();
         }
 
+        //Загружает следующую или предыдущую страницу из inputGrid
         private void Pagination(object sender, RoutedEventArgs e)
         {
             Button obj = (Button)sender;
@@ -152,6 +158,27 @@ namespace LogicalFuncs.pages.trainer
             catch
             { }
         }
+        //Загружает определенную страницу из inputGrid
+        private void GoToPage(int numberPage)
+        {
+            VMT.CurrentPage = numberPage;
+            GridInputContener.Navigate(inputGrid[VMT.CurrentPage]);
+        }
+        //Перемещает кнопку поиска ошибок в зависимоти от количества страниц в inputGrid
+        private void ReplaceForwardButton()
+        {
+            if (inputGrid.Count != 0 && inputGrid.Count == 1)
+            {
+                //Кнопка на месте слайдеров страниц
+                Grid.SetRow(btnForward, 1);
+            }
+            else
+            {
+                //Кнопка выше слайдеров страниц
+                Grid.SetRow(btnForward, 0);
+            }
+        }
+
 
         //Аниманция появления
         private async void GridInputContener_LoadCompleted(object sender, NavigationEventArgs e)
@@ -167,6 +194,7 @@ namespace LogicalFuncs.pages.trainer
             }
         }
 
+        //Получает список ошибок в виде List<TrainerError>
         private void CheckResults(object sender, RoutedEventArgs e)
         {
             List<List<TrainerError>> errors = new List<List<TrainerError>>();
@@ -180,7 +208,28 @@ namespace LogicalFuncs.pages.trainer
             }
             WindowTrainerErrors errorsWindow = new WindowTrainerErrors(parsedFuncs, errors);
             errorsWindow.Show();
-            GridInputContener.Navigate(new PageClasses(VMT, inputGrid));
+        }
+
+        private void Classes_CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                GoToPage(0);
+                inputGrid.Add(new PageClasses(VMT, inputGrid));
+                ReplaceForwardButton();
+            }
+            catch{}
+        }
+
+        private void Classes_CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                GoToPage(0);
+                inputGrid.RemoveAt(inputGrid.Count-1);
+                ReplaceForwardButton();
+            }
+            catch{}
         }
     }
 }

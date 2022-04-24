@@ -92,9 +92,7 @@ namespace LogicalFuncs.pages.trainer
                 }
             }
 
-
             //Генерируем заголовки таблицы
-
             for (int j = 0; j < variables.Count + countMoves; j++)
             {
                 DockPanel background = new DockPanel();
@@ -117,13 +115,11 @@ namespace LogicalFuncs.pages.trainer
                 backgroundHeaders.Add(background);
             }
 
-
             //Генерируем контент таблицы
             for (int i = 1; i < Math.Pow(2, variables.Count) + 1; i++)
             {
                 cellGridInput.Add(new List<TextBox>());
             }
-
             for (int j = 0; j < variables.Count + countMoves; j++)
             {
                 for (int i = 0; i < Math.Pow(2, variables.Count); i++)
@@ -144,7 +140,6 @@ namespace LogicalFuncs.pages.trainer
 
 
         }
-
 
         public List<bool> GetClassesAnswer()
         {
@@ -275,8 +270,6 @@ namespace LogicalFuncs.pages.trainer
 
             return detectedErrors;
         }
-
-
 
         private void SetErrorColumn(int columWithError)
         {

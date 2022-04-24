@@ -21,35 +21,48 @@ namespace LogicalFuncs.pages.trainer
     /// </summary>
     public partial class PageClasses : Page
     {
-        List<string> headerOutputGrid = new List<string> { "К0", "К1", "Кс", "Кл", "Км"};
+        ViewModelTrainer VMT;
+        List<dynamic> selectedClassesFuncs;
+
+        List<string> headerOutputGrid = new List<string> { "F", "К", "К", "К", "К", "К" };
+        List<string> headersIndexOutputGrid = new List<string> { "", "0", "1", "с", "л", "м" };
         GridLength size = new GridLength(1, GridUnitType.Star);
-        public PageClasses(ViewModelTrainer VMT, List<PageGridInput> selectedClassesFuncs)
+
+        public PageClasses(ViewModelTrainer VMT, List<dynamic> selectedClassesFuncs)
         {
             InitializeComponent();
-            GenerateOutputGridClasses(VMT, selectedClassesFuncs);
+            this.VMT = VMT;
+            this.selectedClassesFuncs = selectedClassesFuncs;
         }
 
-        private void GenerateOutputGridClasses(ViewModelTrainer VMT, List<PageGridInput> selectedClassesFuncs)
+        private void GenerateOutputGridClasses(ViewModelTrainer VMT, List<dynamic> selectedClassesFuncs)
         {
+            //Очищаем от предыдущего ответа
+            gridOutputSelectedClasses.Children.Clear();
+            gridOutputSelectedClasses.RowDefinitions.Clear();
+            gridOutputSelectedClasses.ColumnDefinitions.Clear();
+
             //Генерируем колонки таблицы
-            for (int i = 0; i < headerOutputGrid.Count+1; i++)
+            for (int i = 0; i < headerOutputGrid.Count; i++)
             {
                 gridOutputSelectedClasses.ColumnDefinitions.Add(new ColumnDefinition() { Width=size});
             }
 
-            //Генерируем столбцы таблицы (+1 для шапки таблицы)
+            //Генерируем строки таблицы (+1 для шапки таблицы)
             for (int i = 0; i < VMT.GetResultCalculation.Count + 1; i++)
             {
                 gridOutputSelectedClasses.RowDefinitions.Add(new RowDefinition() { Height = size });
             }
 
             //Заполняем шапку таблицы
-            for (int j = 1; j < headerOutputGrid.Count+1; j++)
+            for (int j = 0; j < headerOutputGrid.Count; j++)
             {
                 DockPanel background = new DockPanel();
-                TextBlock header = new TextBlock();
+                TextBlock header = new TextBlock() { Style = (Style)this.Resources["txtHeader"]};
                 background.Children.Add(header);
-                header.Text = headerOutputGrid[j-1];
+                header.Text = headerOutputGrid[j];
+                header.Typography.Variants = FontVariants.Subscript;
+                header.Text += headersIndexOutputGrid[j];
                 Grid.SetRow(background, 0);
                 Grid.SetColumn(background, j);
                 gridOutputSelectedClasses.Children.Add(background);
@@ -59,37 +72,47 @@ namespace LogicalFuncs.pages.trainer
             for (int i = 1; i < VMT.GetResultCalculation.Count + 1; i++)
             {
                 List<bool> answerClasses = selectedClassesFuncs[i - 1].GetClassesAnswer();
-                for (int j = 0; j < headerOutputGrid.Count+1; j++)
+                for (int j = 0; j < headerOutputGrid.Count; j++)
                 {
+                    Border border = new Border() { Style = (Style)this.Resources["brdrCellGrid"]};
                     if (j == 0)
                     {
                         TextBlock func = new TextBlock() { Text = VMT.GetResultCalculation[i - 1].LogicalFunc };
-                        Grid.SetRow(func, i);
-                        Grid.SetColumn(func, j);
-                        gridOutputSelectedClasses.Children.Add(func);
+                        border.Child = func;
+                        Grid.SetRow(border, i);
+                        Grid.SetColumn(border, j);
+                        gridOutputSelectedClasses.Children.Add(border);
                     }
                     else
                     {
                         TextBlock answer = new TextBlock();
+                        border.Child = answer;
                         if (answerClasses[j - 1])
                         {
                             answer.Text = "✓";
-                            answer.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
-                            Grid.SetRow(answer, i);
-                            Grid.SetColumn(answer, j);
-                            gridOutputSelectedClasses.Children.Add(answer);
+                            answer.Foreground = new SolidColorBrush(Color.FromRgb(0, 200, 0));
+                            answer.FontWeight = FontWeights.Bold;
+                            border.Child = answer;
+                            Grid.SetRow(border, i);
+                            Grid.SetColumn(border, j);
+                            gridOutputSelectedClasses.Children.Add(border);
                         }
                         else
                         {
                             answer.Text = "❌";
-                            answer.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                            Grid.SetRow(answer, i);
-                            Grid.SetColumn(answer, j);
-                            gridOutputSelectedClasses.Children.Add(answer);
+                            answer.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                            Grid.SetRow(border, i);
+                            Grid.SetColumn(border, j);
+                            gridOutputSelectedClasses.Children.Add(border);
                         }
                     }
                 }
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            GenerateOutputGridClasses(VMT, selectedClassesFuncs);
         }
     }
 }

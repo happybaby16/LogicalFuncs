@@ -73,14 +73,16 @@ namespace LogicalFuncs.ViewModel
         {
             get 
             {
-                return GetResultCalculation.Count - 1;
+                if (IsClassesOn) return GetResultCalculation.Count;
+                else return GetResultCalculation.Count - 1;
             }
         }
         public bool IsLastPage
         {
             get 
             {
-                if (CurrentPage == MaxPages && MaxPages!=-1) return true;
+                if (CurrentPage == MaxPages && MaxPages != -1 && !IsClassesOn) return true;
+                else if (CurrentPage == MaxPages && MaxPages > 0 && IsClassesOn) return true;
                 else return false;
             }
         }
@@ -88,7 +90,8 @@ namespace LogicalFuncs.ViewModel
         {
             get 
             {
-                if (GetResultCalculation != null && GetResultCalculation.Count > 1) return true;
+                if (GetResultCalculation != null && GetResultCalculation.Count > 1 && !IsClassesOn) return true;
+                else if (GetResultCalculation != null && GetResultCalculation.Count > 0 && IsClassesOn) return true;
                 else return false;
             }
         }
@@ -106,6 +109,9 @@ namespace LogicalFuncs.ViewModel
             {
                 isClassesOn = value;
                 isEnableAddFuncButton = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("MaxPages"));
+                PropertyChanged(this, new PropertyChangedEventArgs("IsVisiblePaginationButtons"));
+                PropertyChanged(this, new PropertyChangedEventArgs("IsLastPage"));
                 PropertyChanged(this, new PropertyChangedEventArgs("IsEnableAddFuncButton"));
             }
         }
