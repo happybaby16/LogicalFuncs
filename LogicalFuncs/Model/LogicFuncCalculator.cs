@@ -511,5 +511,23 @@ namespace LogicFuncs.Model
                 return true;
             }
         }
+
+        public bool? IsLiner
+        {
+            get => true;
+        }
+        public List<bool> GetClasses
+        {
+            get
+            {
+                List<bool> classes = new List<bool>();
+                classes.Add(Convert.ToBoolean(IsSavedZero));
+                classes.Add(Convert.ToBoolean(IsSavedOne));
+                classes.Add(Convert.ToBoolean(IsSelfDual));
+                classes.Add(Convert.ToBoolean(IsLiner));
+                classes.Add(Convert.ToBoolean(IsMonotony));
+                return classes;
+            }
+        }
     }
 }

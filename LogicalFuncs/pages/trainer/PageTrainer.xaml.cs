@@ -106,7 +106,7 @@ namespace LogicalFuncs.pages.trainer
                 }
             }
 
-            if (VMT.IsClassesOn)
+            if (VMT.IsClassesOn && inputGrid.Count!=0)
             {
                 inputGrid.Add(new PageClasses(VMT, inputGrid));
             }
@@ -206,7 +206,7 @@ namespace LogicalFuncs.pages.trainer
                     errors.Add(resultCheck);
                 }
             }
-            WindowTrainerErrors errorsWindow = new WindowTrainerErrors(parsedFuncs, errors);
+            WindowTrainerErrors errorsWindow = new WindowTrainerErrors(parsedFuncs, errors, VMT);
             errorsWindow.Show();
         }
 

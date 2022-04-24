@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LogicalFuncs.ViewModel.Patterns
 {
-    public enum TypeError { ErrorTable=0, ErrorClasses=1, ErrorCompleteness=2, ErrorAnswerNull=3}
+    public enum TypeError { ErrorTable=0, ErrorClasses=1, ErrorCompleteness=2, ErrorAnswerNull=3, ErrorFullFunc=4}
     public class TrainerError
     {
         public TypeError Type { get; set; }
@@ -36,6 +36,10 @@ namespace LogicalFuncs.ViewModel.Patterns
             ErrorMessage = messageError;
         }
 
-
+        public TrainerError(TypeError typeError, string messageError)
+        {
+            Type = typeError;
+            ErrorMessage = messageError;
+        }
     }
 }

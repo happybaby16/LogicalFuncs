@@ -14,8 +14,8 @@ namespace LogicalFuncs.ViewModel
 
 
         //Анимация меню "Бургер"
-        #region Menu animation
-        double widthMenu = 150; //Menu is open 
+        #region Анимация меню
+        double widthMenu = 150; //Меню открыто
         public double WidthMenu
         {
             get => widthMenu;

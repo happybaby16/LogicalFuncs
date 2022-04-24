@@ -1,4 +1,5 @@
 ﻿using LogicalFuncs.ViewModel;
+using LogicalFuncs.ViewModel.Patterns;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,6 +114,39 @@ namespace LogicalFuncs.pages.trainer
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GenerateOutputGridClasses(VMT, selectedClassesFuncs);
+        }
+
+        public List<TrainerError> GetErrors()
+        {
+            bool globalAnswer = true;//Является ли функция полной?
+            List<bool> checkList = new List<bool>() { false, false, false, false, false };
+            List<TrainerError> errors = new List<TrainerError>();
+            for (int i = 0; i < VMT.GetResultCalculation.Count; i++)
+            {
+                List<bool> answersFunc = VMT.GetResultCalculation[i].GetClasses;
+                for (int j = 0; j < answersFunc.Count; j++)
+                {
+                    if (checkList[j] != true && answersFunc[j] == true)
+                    {
+                        checkList[j] = true;
+                    }
+                }
+            }
+            for (int i = 0; i < checkList.Count; i++)
+            {
+                if (checkList[i] == false)
+                {
+                    globalAnswer = false;
+                    break;
+                }
+
+            }
+            if (checkBoxFullFunc.IsChecked!=globalAnswer)
+            {
+                errors.Add(new TrainerError(TypeError.ErrorFullFunc, "Полнота системы функций. Ошибка определения полноты системы функций."));
+            }
+
+            return errors;
         }
     }
 }
