@@ -21,62 +21,86 @@ namespace LogicalFuncs.windows.trainer
     /// </summary>
     public partial class WindowTrainerErrors : Window
     {
+        List<string> logicalFuncs;
+        List<List<TrainerError>> errors;
+        ViewModelTrainer VMT;
         public WindowTrainerErrors(List<string> logicalFuncs, List<List<TrainerError>> errors, ViewModelTrainer VMT)
         {
             InitializeComponent();
-            GenerateErrorsList(logicalFuncs, errors, VMT);
+            this.logicalFuncs = logicalFuncs;
+            this.errors = errors;
+            this.VMT = VMT;
+            GenerateErrorsList();
         }
-        private async void GenerateErrorsList(List<string> logicalFuncs, List<List<TrainerError>> errors, ViewModelTrainer VMT)
+        private async void GenerateErrorsList()
         {
-            for (int i = 0; i < logicalFuncs.Count; i++)
+            if (logicalFuncs != null)
             {
-                StackPanel headerRow = new StackPanel() { Orientation = Orientation.Horizontal };
-                TextBlock errorSymbolHeader;
-                if (errors[i].Count == 0)
+                for (int i = 0; i < logicalFuncs.Count; i++)
                 {
-                    errorSymbolHeader = new TextBlock() { Text = "✓", Foreground = new SolidColorBrush(Color.FromRgb(0, 128, 0)), Margin = new Thickness(5, 0, 0, 0), FontSize = 18 };
+                    StackPanel headerRow = new StackPanel() { Orientation = Orientation.Horizontal };
+                    TextBlock errorSymbolHeader;
+                    if (errors[i].Count == 0)
+                    {
+                        errorSymbolHeader = new TextBlock() { Text = "✓", Foreground = new SolidColorBrush(Color.FromRgb(0, 200, 0)), Margin = new Thickness(10, 0, 0, 0), FontSize = 16, FontWeight = FontWeights.Bold };
+                    }
+                    else
+                    {
+                        errorSymbolHeader = new TextBlock() { Text = "❌", Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)), Margin = new Thickness(5, 0, 0, 0), FontSize = 16 };
+                    }
+                    TextBlock errorHeader = new TextBlock() { Text = logicalFuncs[i], VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+                    headerRow.Children.Add(errorSymbolHeader);
+                    headerRow.Children.Add(errorHeader);
+                    errorsContener.Children.Add(headerRow);
+
+                    //Показывает в чём именно ошибка заключается
+                    if (cmbErrorsMode.SelectedIndex == 1)
+                    {
+                        AdvancedMode(i);
+                    }
                 }
-                else
+
+                if (VMT.IsClassesOn)
                 {
-                    errorSymbolHeader = new TextBlock() { Text = "✕", Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)), Margin = new Thickness(5, 0, 0, 0), FontSize = 18 };
-                }
-                TextBlock errorHeader = new TextBlock() { Text = logicalFuncs[i], VerticalAlignment = VerticalAlignment.Center };
-                headerRow.Children.Add(errorSymbolHeader);
-                headerRow.Children.Add(errorHeader);
-                errorsContener.Children.Add(headerRow);
-                for (int k = 0; k < errors[i].Count; k++)
-                {
-                    TextBlock errorSymbol = new TextBlock() { Text = "✕", Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)), Margin = new Thickness(15, 0, 0, 0), FontSize = 18 };
-                    StackPanel errorRow = new StackPanel() { Orientation = Orientation.Horizontal };
-                    TextBlock errorText = new TextBlock() { Text = errors[i][k].ErrorMessage, VerticalAlignment = VerticalAlignment.Center };
-                    errorRow.Children.Add(errorSymbol);
-                    errorRow.Children.Add(errorText);
-                    errorsContener.Children.Add(errorRow);
+                    if (errors[errors.Count - 1].Count != 0 && errors[errors.Count - 1][0].Type == TypeError.ErrorFullFunc)
+                    {
+                        TextBlock errorSymbol = new TextBlock() { Text = "❌", Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)), Margin = new Thickness(5, 0, 0, 0), FontSize = 16 };
+                        StackPanel errorRow = new StackPanel() { Orientation = Orientation.Horizontal };
+                        TextBlock errorText = new TextBlock() { Text = errors[errors.Count - 1][0].ErrorMessage, VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+                        errorRow.Children.Add(errorSymbol);
+                        errorRow.Children.Add(errorText);
+                        errorsContener.Children.Add(errorRow);
+                    }
+                    else
+                    {
+                        TextBlock errorSymbol = new TextBlock() { Text = "✓", Foreground = new SolidColorBrush(Color.FromRgb(0, 200, 0)), Margin = new Thickness(10, 0, 0, 0), FontSize = 18, FontWeight = FontWeights.Bold };
+                        StackPanel errorRow = new StackPanel() { Orientation = Orientation.Horizontal };
+                        TextBlock errorText = new TextBlock() { Text = "Полнота системы функций", VerticalAlignment = VerticalAlignment.Center, FontSize = 16 };
+                        errorRow.Children.Add(errorSymbol);
+                        errorRow.Children.Add(errorText);
+                        errorsContener.Children.Add(errorRow);
+                    }
                 }
             }
 
-            if (VMT.IsClassesOn)
-            {
-                if (errors[errors.Count - 1].Count != 0 && errors[errors.Count - 1][0].Type == TypeError.ErrorFullFunc)
-                {
-                    TextBlock errorSymbol = new TextBlock() { Text = "✕", Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)), Margin = new Thickness(5, 0, 0, 0), FontSize = 18 };
-                    StackPanel errorRow = new StackPanel() { Orientation = Orientation.Horizontal };
-                    TextBlock errorText = new TextBlock() { Text = errors[errors.Count - 1][0].ErrorMessage, VerticalAlignment = VerticalAlignment.Center };
-                    errorRow.Children.Add(errorSymbol);
-                    errorRow.Children.Add(errorText);
-                    errorsContener.Children.Add(errorRow);
-                }
-                else
-                {
-                    TextBlock errorSymbol = new TextBlock() { Text = "✓", Foreground = new SolidColorBrush(Color.FromRgb(0, 128, 0)), Margin = new Thickness(5, 0, 0, 0), FontSize = 18 };
-                    StackPanel errorRow = new StackPanel() { Orientation = Orientation.Horizontal };
-                    TextBlock errorText = new TextBlock() { Text = "Полнота системы функций", VerticalAlignment = VerticalAlignment.Center };
-                    errorRow.Children.Add(errorSymbol);
-                    errorRow.Children.Add(errorText);
-                    errorsContener.Children.Add(errorRow);
-                }
-            }
+        }
 
+        private void AdvancedMode(int indexFunc)
+        {
+            for (int k = 0; k < errors[indexFunc].Count; k++)
+            {
+                TextBlock errorSymbol = new TextBlock() { Text = "❌", Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0)), Margin = new Thickness(25, 0, 0, 0) };
+                StackPanel errorRow = new StackPanel() { Orientation = Orientation.Horizontal };
+                TextBlock errorText = new TextBlock() { Text = errors[indexFunc][k].ErrorMessage, VerticalAlignment = VerticalAlignment.Center };
+                errorRow.Children.Add(errorSymbol);
+                errorRow.Children.Add(errorText);
+                errorsContener.Children.Add(errorRow);
+            }
+        }
+        private void AdvancedMode_Selected(object sender, RoutedEventArgs e)
+        {
+            errorsContener?.Children.Clear();
+            GenerateErrorsList();
         }
     }
 }

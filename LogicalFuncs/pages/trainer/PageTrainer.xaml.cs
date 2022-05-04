@@ -211,6 +211,8 @@ namespace LogicalFuncs.pages.trainer
                     errors.Add(resultCheck);
                 }
             }
+
+            //Загружаем полученные ошибки в новое окно
             WindowTrainerErrors errorsWindow = new WindowTrainerErrors(parsedFuncs, errors, VMT);
             errorsWindow.Show();
         }
