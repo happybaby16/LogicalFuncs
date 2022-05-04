@@ -105,7 +105,14 @@ namespace LogicalFuncs.pages.trainer
                 catch
                 {
                     header.FontSize = 12;
-                    header.Text = "№"+Convert.ToString(j - (variables.Count - 1));
+                    if (VMT.IsCalculator && !Func.IsUserHaveAnswer)
+                    {
+                        header.Text = Func.OperationsPriority[j - (variables.Count)];
+                    }
+                    else
+                    {
+                        header.Text = "№" + Convert.ToString(j - (variables.Count - 1));
+                    }
                 }
                
                 Grid.SetRow(background, 0);
@@ -127,9 +134,18 @@ namespace LogicalFuncs.pages.trainer
                     TextBox cell = new TextBox();
                     cell.TextChanged += ContentCell;
                     cell.MinWidth = 30;
-                    if (j < variables.Count)
+
+                    //VMT.IsCalculator заполняет все ячейки ответами, если режим калькулятора
+                    if (j < variables.Count || VMT.IsCalculator)
                     {
-                        cell.Text = Convert.ToString(Convert.ToInt32(Func.CalculationLogs[i][j].ResultValue));
+                        try
+                        {
+                            cell.Text = Convert.ToString(Convert.ToInt32(Func.CalculationLogs[i][j].ResultValue));
+                        }
+                        catch 
+                        {
+                            cell.TextChanged += IsUserHaveAnswer_Calculator_TextChanged;
+                        }
                     }
                     Grid.SetRow(cell, i+1);
                     Grid.SetColumn(cell, j);
@@ -138,9 +154,20 @@ namespace LogicalFuncs.pages.trainer
                 }
             }
 
+            //Указываем классы, к которым принадлежит функция (функция только для калькулятора)
+            if(VMT.IsCalculator)
+            {
+                classSaveZero.IsChecked = Func.IsSavedZero == null ? false : Func.IsSavedZero;
+                classSaveOne.IsChecked = Func.IsSavedOne == null ? false: Func.IsSavedOne;
+                classSelfDual.IsChecked = Func.IsSelfDual==null ? false : Func.IsSelfDual;
+                classLinear.IsChecked = Func.IsLiner==null ? false : Func.IsLiner;
+                classMonotony.IsChecked = Func.IsMonotony==null ? false : Func.IsMonotony;
+            }
+
 
         }
 
+        //Метод для вывода выбранных классов (PageClasses)
         public List<bool> GetClassesAnswer()
         {
             List<bool> answers = new List<bool>();
@@ -152,6 +179,7 @@ namespace LogicalFuncs.pages.trainer
             return answers;
         }
 
+        //Возвращает список ошибок 
         public List<TrainerError> GetErrors()
         {
             GradientStopCollection colorFalse = new GradientStopCollection();
@@ -259,8 +287,10 @@ namespace LogicalFuncs.pages.trainer
                     detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kс", "самодвойственная функция"));
                 }
 
-                if (classLinear.IsChecked != false)
-                { }
+                if (classLinear.IsChecked != Func.IsLiner)
+                {
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kл", "линейная функция"));
+                }
 
                 if (classMonotony.IsChecked != Func.IsMonotony)
                 {
@@ -271,6 +301,7 @@ namespace LogicalFuncs.pages.trainer
             return detectedErrors;
         }
 
+        //Подсвечивает столбец с ошибкой
         private void SetErrorColumn(int columWithError)
         {
             for (int i = 0; i < Math.Pow(2, Func.VariableNames.Count); i++)
@@ -278,6 +309,7 @@ namespace LogicalFuncs.pages.trainer
                 cellGridInput[i][columWithError].Background = linerColorFalse;
             }
         }
+
 
         private void SetNullColorColumn(int columWithError)
         {
@@ -287,6 +319,7 @@ namespace LogicalFuncs.pages.trainer
             }
         }
 
+        //Анимация появления панели замкнутых классов
         private async void ClassesPanel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             StackPanel obj = (StackPanel)sender;
@@ -299,6 +332,31 @@ namespace LogicalFuncs.pages.trainer
                 obj.Margin = new Thickness(0, startMarginTop - i, 0, 0);
                 await Task.Delay(10);
             }
+        }
+
+        //Генерирует ответ принадлежности к замкнутым классам для неполных функций на ходу (режим калькулятора)
+        private void IsUserHaveAnswer_Calculator_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int lastColumn = Func.VariableNames.Count;
+            Func.Answer.Clear();
+            for (int i = 0; i < Math.Pow(2, Func.VariableNames.Count); i++)
+            {
+                try
+                {
+                    Func.Answer.Add(Convert.ToBoolean(Convert.ToInt32(cellGridInput[i][lastColumn].Text)));
+                }
+                catch
+                {
+                    Func.Answer.Clear();
+                    break;
+                }
+            }
+
+            classSaveZero.IsChecked = Func.IsSavedZero == null ? false : Func.IsSavedZero;
+            classSaveOne.IsChecked = Func.IsSavedOne == null ? false : Func.IsSavedOne;
+            classSelfDual.IsChecked = Func.IsSelfDual == null ? false : Func.IsSelfDual;
+            classLinear.IsChecked = Func.IsLiner == null ? false : Func.IsLiner;
+            classMonotony.IsChecked = Func.IsMonotony == null ? false : Func.IsMonotony;
         }
     }
 }

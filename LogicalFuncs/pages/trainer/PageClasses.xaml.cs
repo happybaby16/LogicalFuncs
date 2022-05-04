@@ -109,6 +109,11 @@ namespace LogicalFuncs.pages.trainer
                     }
                 }
             }
+
+            if (VMT.IsCalculator)
+            {
+                checkBoxFullFunc.IsChecked = GetClassesAnswer();
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -116,11 +121,10 @@ namespace LogicalFuncs.pages.trainer
             GenerateOutputGridClasses(VMT, selectedClassesFuncs);
         }
 
-        public List<TrainerError> GetErrors()
+        private bool GetClassesAnswer()
         {
             bool globalAnswer = true;//Является ли функция полной?
             List<bool> checkList = new List<bool>() { false, false, false, false, false };
-            List<TrainerError> errors = new List<TrainerError>();
             for (int i = 0; i < VMT.GetResultCalculation.Count; i++)
             {
                 List<bool> answersFunc = VMT.GetResultCalculation[i].GetClasses;
@@ -139,9 +143,14 @@ namespace LogicalFuncs.pages.trainer
                     globalAnswer = false;
                     break;
                 }
-
             }
-            if (checkBoxFullFunc.IsChecked!=globalAnswer)
+            return globalAnswer;
+        }
+
+        public List<TrainerError> GetErrors()
+        {
+            List<TrainerError> errors = new List<TrainerError>();
+            if (checkBoxFullFunc.IsChecked!=GetClassesAnswer())
             {
                 errors.Add(new TrainerError(TypeError.ErrorFullFunc, "Полнота системы функций. Ошибка определения полноты системы функций."));
             }

@@ -99,8 +99,8 @@
                     <CheckBox x:Name="classSaveOne"  Content="Сохраняет константу 1" Style="{StaticResource CheckBoxBuild}"/>
                     <CheckBox x:Name="classSelfDual" Content="Функция самодвойственная" Style="{StaticResource CheckBoxBuild}"/>
                     <CheckBox x:Name="classLinear" Content="Функция линейная" Style="{StaticResource CheckBoxBuild}"/>
-                    <CheckBox x:Name="classMonotony"  Content="Функция монотонная" Style="{StaticResource CheckBoxBuild}"/>
-                </StackPanel>
+                <CheckBox x:Name="classMonotony"  Content="Функция монотонная" Style="{StaticResource CheckBoxBuild}"/>
+            </StackPanel>
             </ScrollViewer>
     </Grid>
             

@@ -82,11 +82,11 @@
                     <TextBlock x:Name="txtTrainer" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Тренажер</TextBlock>
                 </StackPanel>
 
-                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Bottom" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Bottom" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtCalculator, Path=Text}">
                     <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" FontSize="11" TextWrapping="Wrap">
                         <Run>0101101101</Run>
                     </TextBlock>
-                    <TextBlock  Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Калькулятор</TextBlock>
+                    <TextBlock x:Name="txtCalculator"  Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Калькулятор</TextBlock>
                 </StackPanel>
             </DockPanel>
         </ScrollViewer>

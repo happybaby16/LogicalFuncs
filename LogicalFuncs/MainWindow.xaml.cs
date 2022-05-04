@@ -33,15 +33,15 @@ namespace LogicalFuncs
             PagesNavigation.PageContener.Navigate(new PageTheoryMenu(VMM));
             DataContext = VMM;
             CommandBindings.Add(VMM.MenuMoveBinding);
+
+            pageTheoryMenu = new PageTheoryMenu(VMM);
+            pagePracticeMenu = new PagePracticeMenu();
+            pageTrainerMenu = new PageTrainer();
         }
 
         //Загрузка пунктов меню
         private void Point_Menu_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            pageTheoryMenu = new PageTheoryMenu(VMM);
-            pagePracticeMenu = new PagePracticeMenu();
-            pageTrainerMenu = new PageTrainer();
-
             StackPanel obj = (StackPanel)sender;
             switch (obj.Uid)
             {
@@ -53,6 +53,9 @@ namespace LogicalFuncs
                     break;
                 case "Тренажер":
                     PagesNavigation.PageContener.Navigate(pageTrainerMenu);
+                    break;
+                case "Калькулятор":
+                    PagesNavigation.PageContener.Navigate(new PageTrainer(true));
                     break;
             }
         }

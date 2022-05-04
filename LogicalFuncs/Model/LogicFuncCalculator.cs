@@ -230,7 +230,7 @@ namespace LogicFuncs.Model
                                 {
                                     LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
-                                    string resultPriority = $"{operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()}";
+                                    string resultPriority = $"({operationsStack.Peek().Value.ToString() + operationsPriorityString.Pop()})";
                                     operationsPriorityString.Push(resultPriority);
                                     OperationsPriority.Add(resultPriority);
 
@@ -252,7 +252,7 @@ namespace LogicFuncs.Model
                                     string previousOperation = operationsPriorityString.Pop();
                                     string sOperation = operationsStack.Peek().Value.ToString();
                                     string fOperation = operationsPriorityString.Pop();
-                                    string resultPriority = $"{fOperation + sOperation}({previousOperation})";
+                                    string resultPriority = $"({fOperation + sOperation}{previousOperation})";
                                     operationsPriorityString.Push(resultPriority);
                                     OperationsPriority.Add(resultPriority);
 
@@ -321,7 +321,7 @@ namespace LogicFuncs.Model
                                     string previousOperation = operationsPriorityString.Pop();
                                     string sOperation = operationsStack.Peek().Value.ToString();
                                     string fOperation = operationsPriorityString.Pop();
-                                    string resultPriority = $"{fOperation + sOperation}({previousOperation})";
+                                    string resultPriority = $"({fOperation + sOperation}{previousOperation})";
                                     operationsPriorityString.Push(resultPriority);
                                     OperationsPriority.Add(resultPriority);
 
@@ -376,7 +376,7 @@ namespace LogicFuncs.Model
                         string previousOperation = operationsPriorityString.Pop();
                         string sOperation = operationsStack.Peek().Value.ToString();
                         string fOperation = operationsPriorityString.Pop();
-                        string resultPriority = $"{fOperation + sOperation}({previousOperation})";
+                        string resultPriority = $"({fOperation + sOperation}{previousOperation})";
                         operationsPriorityString.Push(resultPriority);
                         OperationsPriority.Add(resultPriority);
 
@@ -512,10 +512,14 @@ namespace LogicFuncs.Model
             }
         }
 
+        /// <summary>
+        /// Свойство, определяющее является ли булевая функция линейной
+        /// </summary>
         public bool? IsLiner
         {
             get => true;
         }
+
         public List<bool> GetClasses
         {
             get

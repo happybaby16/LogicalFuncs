@@ -109,10 +109,10 @@ namespace LogicalFuncs.ViewModel
             {
                 isClassesOn = value;
                 isEnableAddFuncButton = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("MaxPages"));
-                PropertyChanged(this, new PropertyChangedEventArgs("IsVisiblePaginationButtons"));
-                PropertyChanged(this, new PropertyChangedEventArgs("IsLastPage"));
-                PropertyChanged(this, new PropertyChangedEventArgs("IsEnableAddFuncButton"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MaxPages"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsVisiblePaginationButtons"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsLastPage"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsEnableAddFuncButton"));
             }
         }
         bool isEnableAddFuncButton = false;
@@ -129,6 +129,19 @@ namespace LogicalFuncs.ViewModel
         }
         #endregion
 
-
+        bool isCalculator = false;
+        public bool IsCalculator 
+        {
+            get
+            {
+                return isCalculator;
+            }
+            set
+            {
+                isCalculator = value;
+                IsClassesOn = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsClassesOn"));
+            }
+        }
     }
 }

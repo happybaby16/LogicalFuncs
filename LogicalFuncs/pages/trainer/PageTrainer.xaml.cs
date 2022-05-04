@@ -31,11 +31,16 @@ namespace LogicalFuncs.pages.trainer
         List<dynamic> inputGrid = new List<dynamic>();//Контейнер для страниц
 
         List<string> parsedFuncs = new List<string>();
-        public PageTrainer()
+
+
+        public PageTrainer(bool accessCalculator=false)
         {
             InitializeComponent();
             DataContext = VMT;
             GridInputContener.Navigate(new PageStartTrainer());
+
+            //Указываем режим работы тренажера (тренажер/калькулятор)
+            VMT.IsCalculator = accessCalculator;
         }
 
         //Функция для записи символа нажатой кнопки в строку функции
