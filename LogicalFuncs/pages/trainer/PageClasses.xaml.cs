@@ -124,21 +124,26 @@ namespace LogicalFuncs.pages.trainer
         private bool GetClassesAnswer()
         {
             bool globalAnswer = true;//Является ли функция полной?
-            List<bool> checkList = new List<bool>() { false, false, false, false, false };
+            List<bool> checkListTrue = new List<bool>() { false, false, false, false, false };
+            List<bool> checkListFalse = new List<bool>() { true, true, true, true, true };
             for (int i = 0; i < VMT.GetResultCalculation.Count; i++)
             {
                 List<bool> answersFunc = VMT.GetResultCalculation[i].GetClasses;
                 for (int j = 0; j < answersFunc.Count; j++)
                 {
-                    if (checkList[j] != true && answersFunc[j] == true)
+                    if (checkListTrue[j] != true && answersFunc[j] == true)
                     {
-                        checkList[j] = true;
+                        checkListTrue[j] = true;
+                    }
+                    if (checkListFalse[j] != false && answersFunc[j] == false)
+                    {
+                        checkListFalse[j] = false;
                     }
                 }
             }
-            for (int i = 0; i < checkList.Count; i++)
+            for (int i = 0; i < checkListTrue.Count; i++)
             {
-                if (checkList[i] == false)
+                if (checkListTrue[i] == false || checkListFalse[i]==true)
                 {
                     globalAnswer = false;
                     break;

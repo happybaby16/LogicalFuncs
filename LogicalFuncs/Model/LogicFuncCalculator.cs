@@ -517,7 +517,27 @@ namespace LogicFuncs.Model
         /// </summary>
         public bool? IsLiner
         {
-            get => true;
+            get
+            {
+                if (Answer == null || Answer.Count == 0) return null;
+                List<List<bool>> polinomData = new List<List<bool>>();
+                polinomData.Add(Answer);
+                for (int i = 1; i < Answer.Count; i++)
+                {
+                    polinomData.Add(new List<bool>());
+                    for (int k = 0; k < polinomData[i - 1].Count - 1; k++)
+                    {
+                        polinomData[i].Add(LogicOperations.Calculate(polinomData[i - 1][k], polinomData[i - 1][k + 1], Operation.SumModulo));
+                    }
+                }
+
+                for (int i = 0; i < polinomData.Count; i++)
+                {
+                    if (i == 0 || i == 1 || i == 2 || i == 4) continue;
+                    if (polinomData[i][0] == true) return false;
+                }
+                return true;
+            }
         }
 
         public List<bool> GetClasses
