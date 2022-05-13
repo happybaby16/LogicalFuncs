@@ -84,11 +84,11 @@ namespace LogicalFuncs.pages.trainer
             {
                 if (i == 0)
                 {
-                    gridInput.RowDefinitions.Add(new RowDefinition() { Height = size });
+                    gridInput.RowDefinitions.Add(new RowDefinition() { Height = size});
                 }
                 else
                 {
-                    gridInput.RowDefinitions.Add(new RowDefinition() { Height = size });
+                    gridInput.RowDefinitions.Add(new RowDefinition() { Height = size});
                 }
             }
 

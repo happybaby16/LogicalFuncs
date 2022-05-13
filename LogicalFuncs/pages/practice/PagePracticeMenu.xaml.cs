@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicalFuncs.pages.theory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,11 @@ namespace LogicalFuncs.pages.practice
             InitializeComponent();
         }
 
-       
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image tImg = (Image)sender;
+            PagesNavigation.PageContener.Navigate(new PageTheoryInfo(tImg.Uid));
+        }
+
     }
 }

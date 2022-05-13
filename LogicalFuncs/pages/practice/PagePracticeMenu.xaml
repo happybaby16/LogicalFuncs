@@ -9,10 +9,62 @@
       Title="PagePracticeMenu"
       Name="pageObject"
     >
-    
+    <Page.Resources>
+        <Style TargetType="StackPanel">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Image">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="150"/>
+            <Setter Property="Margin" Value="10"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Width" Value="160"/>
+                    <Setter Property="Height" Value="160"/>
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="/LogicalFuncs;component/fonts/#Roboto Thin"/>
+            <Setter Property="Foreground" Value="#1A76CE"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
 
 
-    <Grid>
-        <TextBlock>Меню практики</TextBlock>
-    </Grid>
+
+    </Page.Resources>
+
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+                <Image Source="../../images/practice/PracticalTaskTables.png" Uid="\source\docs\practice\PracticalTaskTables.docx" MouseDown="Image_MouseDown"/>
+                <TextBlock>Таблицы истиности</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
+                <Image Source="../../images/practice/PracticalTaskClasses.png" Uid="\source\docs\practice\PracticalTaskClasses.docx" MouseDown="Image_MouseDown"/>
+                <TextBlock>Замкнутые классы</TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2">
+                <Image Source="../../images/practice/PracticalTaskTablesClasses.png" Uid="\source\docs\practice\PracticalTaskTablesClasses.docx"  MouseDown="Image_MouseDown"/>
+                <TextBlock TextWrapping="Wrap" Width="150">Таблицы истиности и замкнутые классы</TextBlock>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>

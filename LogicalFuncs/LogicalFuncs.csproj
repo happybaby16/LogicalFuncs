@@ -202,5 +202,10 @@
   <ItemGroup>
     <Resource Include="images\theory\SumModulo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\practice\PracticalTaskClasses.png" />
+    <Resource Include="images\practice\PracticalTaskTables.png" />
+    <Resource Include="images\practice\PracticalTaskTablesClasses.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
