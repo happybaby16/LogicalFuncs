@@ -129,7 +129,7 @@ namespace LogicFuncs.Model
         {
             get
             {
-                if (operations.IsMatch(LogicalFunc)) return false;
+                if (operations.IsMatch(LogicalFunc)||variablesFunc.Matches(LogicalFunc).Count!=LogicalFunc.Length) return false;
                 return true;
             }
         }//Необходимо, если у пользователя есть вектор функции. Т.е. у пользователя нет конкрентной функции, но есть на неё ответ
@@ -245,7 +245,7 @@ namespace LogicFuncs.Model
 
                                     CalculationLogs[CalculationLogs.Count - 1].Add(temp);
                                 }
-                                else if(valuesStack.Count >= 2)
+                                else if (valuesStack.Count >= 2)
                                 {
                                     LogicalFuncsLogs temp = new LogicalFuncsLogs();
 
@@ -270,6 +270,10 @@ namespace LogicFuncs.Model
                                     valuesStack.Push(resultCalc);
 
                                     CalculationLogs[CalculationLogs.Count - 1].Add(temp);
+                                }
+                                else
+                                {
+                                    return null;
                                 }
                             }
                             operationsStack.Push(tokenExpression[i]);

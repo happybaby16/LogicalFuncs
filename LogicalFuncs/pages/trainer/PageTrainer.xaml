@@ -136,13 +136,12 @@
             </Grid.RowDefinitions>
 
             <!--Поле для ввода пользовательской функции-->
-            <!--<Button Style="{StaticResource btnCalculator}" Content="+" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,5" Background="{StaticResource AppBlueColor}" Foreground="White" Click="AddFunc"/>-->
             <Grid Margin="0,0,0,5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <CheckBox Grid.Column="0" Style="{StaticResource checkBoxClasses}" Margin="0.5,0,0,0" Content="[∑]" IsChecked="{Binding Path=IsClassesOn}" FontSize="14" Checked="Classes_CheckBox_Checked" Unchecked="Classes_CheckBox_Unchecked"/>
+                <CheckBox Grid.Column="0" Style="{StaticResource checkBoxClasses}" Margin="0.5,0,0,0" Content="[∑]" IsChecked="{Binding Path=IsClassesOn}" FontSize="14" Checked="Classes_CheckBox_Checked" Unchecked="Classes_CheckBox_Unchecked" ToolTip="Определение принадлежности функции к замкнутым классам"/>
                 <Button Grid.Column="1" Style="{StaticResource btnAddFunc}" Content="+" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Click="AddFunc"/>
             </Grid>
 
@@ -158,27 +157,27 @@
             <!--Вторая строка кнопок сверху-->
             <Button Style="{StaticResource btnCalculator}" Content="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Foreground="{StaticResource AppGreyText}"  Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="¬" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2" FontSize="30"  Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="↔" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="2" FontSize="30" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="¬" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2" FontSize="30"  Click="Button_Click" ToolTip="Инверсия"/>
+            <Button Style="{StaticResource btnCalculator}" Content="↔" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="2" FontSize="30" Click="Button_Click" ToolTip="Эквиваленция"/>
             <!--Третья строка кнопок сверху-->
             <Button Style="{StaticResource btnCalculator}" Content="J" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="3" Foreground="{StaticResource AppGreyText}" Click="Button_Click" />
             <Button Style="{StaticResource btnCalculator}" Content="H" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="3" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="3" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="→" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="3"  FontSize="30" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="→" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="3"  FontSize="30" Click="Button_Click" ToolTip="Импликация"/>
             <!--Четвертая строка кнопок сверху-->
             <Button Style="{StaticResource btnCalculator}" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="4" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="4" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="∨" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="4"  FontSize="30"  Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="∨" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="4"  FontSize="30"  Click="Button_Click" ToolTip="Дизъюнкция"/>
             <!--Пятая строка кнопок сверху-->
             <Button Style="{StaticResource btnCalculator}" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="5" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="5" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="5" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="∧" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="5" FontSize="30"  Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="∧" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="5" FontSize="30"  Click="Button_Click" ToolTip="Конъюнкция"/>
             <!--Шестая строка кнопок сверху-->
-            <Button Style="{StaticResource btnCalculator}" Content="↓" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="6" FontSize="30"  Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="⊕" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" FontSize="26" Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="|" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="6" FontSize="24" Click="Button_Click"/>
+            <Button Style="{StaticResource btnCalculator}" Content="↓" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="6" FontSize="30"  Click="Button_Click" ToolTip="Стрелка Пирса"/>
+            <Button Style="{StaticResource btnCalculator}" Content="⊕" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" FontSize="26" Click="Button_Click" ToolTip="Сумма по модулю два"/>
+            <Button Style="{StaticResource btnCalculator}" Content="|" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="6" FontSize="24" Click="Button_Click" ToolTip="Штрих Шеффера"/>
             <Button Style="{StaticResource btnCalculator}" Content="=" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="6" Background="{StaticResource AppBlueColor}" Foreground="White"  FontSize="40"  Click="ResultAdding"/>
 
         </Grid>
@@ -194,9 +193,9 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnForward" Style="{StaticResource btnCheck}" Content="🔍" Uid="forward" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0" Click="CheckResults"/>
-            <Button Style="{StaticResource btnPagination}" Content="◁" Uid="backward" Click="Pagination" Grid.Row="1" Grid.Column="0" Margin="5,0,0,0"/>
-            <Button Style="{StaticResource btnPagination}" Content="▷" Uid="forward" Click="Pagination" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+            <Button x:Name="btnForward" Style="{StaticResource btnCheck}" Content="🔍" Uid="forward" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0" Click="CheckResults" ToolTip="Проверить решение"/>
+            <Button Style="{StaticResource btnPagination}" Content="◁" Uid="backward" Click="Pagination" Grid.Row="1" Grid.Column="0" Margin="5,0,0,0" ToolTip="Предыдущая страница"/>
+            <Button Style="{StaticResource btnPagination}" Content="▷" Uid="forward" Click="Pagination" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" ToolTip="Следующая страница"/>
             
         </Grid>
         

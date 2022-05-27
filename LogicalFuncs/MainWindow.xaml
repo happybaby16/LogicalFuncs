@@ -14,7 +14,7 @@
 
     <Window.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="/LogicalFuncs;component/fonts/#Roboto Thin"/>
+            <Setter Property="FontFamily" Value="/LogicalFuncs;component/fonts/#Roboto Light"/>
             <Setter Property="FontSize" Value="12"/>
         </Style>
 
@@ -45,44 +45,36 @@
                         <MouseBinding Gesture="LeftClick" Command="{Binding MenuMoveCommand}" />
                     </Image.InputBindings>
                 </Image>
-
-                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTheory, Path=Text}">
+                
+                <StackPanel x:Name="spTheory" DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTheory, Path=Text}">
                     <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" TextWrapping="Wrap">
                         <Run>🕮</Run>
                     </TextBlock>
-                    <!--<Image  Source="../../images/icons/theory_icon.png" Width="35" Height="25" >
-                        <Image.InputBindings>
-                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
-                        </Image.InputBindings>
-                    </Image>-->
                     <TextBlock x:Name="txtTheory" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Теория</TextBlock>
                 </StackPanel>
 
-                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtPractice, Path=Text}">
+                <StackPanel x:Name="spPractice" DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtPractice, Path=Text}">
                     <TextBlock Margin="9,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap">
                         <Run>💡</Run>
                     </TextBlock>
-                    <!--<Image  Source="../../images/icons/practice_icon.png" Width="35" Height="25" >
-                        <Image.InputBindings>
-                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
-                        </Image.InputBindings>
-                    </Image>-->
                     <TextBlock x:Name="txtPractice" Foreground="White" VerticalAlignment="Center" Margin="6,0,0,0">Практика</TextBlock>
                 </StackPanel>
 
-                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
+                <StackPanel x:Name="spTrainer" DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Center" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtTrainer, Path=Text}">
                     <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap">
                         <Run>∧∨</Run>
                     </TextBlock>
-                    <!--<Image  Source="../../images/icons/logicalfuncs_icon.png" Width="35" Height="25" >
-                        <Image.InputBindings>
-                            <MouseBinding Gesture="LeftClick" Command="{Binding ApplyFilter, Mode=OneTime}" />
-                        </Image.InputBindings>
-                    </Image>-->
                     <TextBlock x:Name="txtTrainer" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0">Тренажер</TextBlock>
                 </StackPanel>
 
-                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Bottom" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtCalculator, Path=Text}">
+                <StackPanel x:Name="spInformation" DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Bottom" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtInformation, Path=Text}">
+                    <TextBlock Margin="10,0,0,0" Width="35" Height="25" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap">
+                        <Run>🛈</Run>
+                    </TextBlock>
+                    <TextBlock x:Name="txtInformation"  Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0">Информация</TextBlock>
+                </StackPanel>
+
+                <StackPanel x:Name="spCalculator" DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,20,0,0" VerticalAlignment="Bottom" Style="{StaticResource stlStackPanelMenu}" MouseDown="Point_Menu_MouseDown" Uid="{Binding ElementName=txtCalculator, Path=Text}">
                     <TextBlock Margin="5,0,0,0" Width="35" Height="25" Foreground="White" VerticalAlignment="Center" FontSize="11" TextWrapping="Wrap">
                         <Run>0101101101</Run>
                     </TextBlock>

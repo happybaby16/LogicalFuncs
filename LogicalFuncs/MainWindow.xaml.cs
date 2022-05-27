@@ -7,6 +7,8 @@ using LogicalFuncs.pages.theory;
 using LogicalFuncs.pages.practice;
 using LogicalFuncs.pages.trainer;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using LogicalFuncs.pages.information;
 
 namespace LogicalFuncs
 {
@@ -26,6 +28,8 @@ namespace LogicalFuncs
         PagePracticeMenu pagePracticeMenu;
         PageTrainer pageTrainerMenu;
 
+        List<StackPanel> menuPoints;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,6 +41,8 @@ namespace LogicalFuncs
             pageTheoryMenu = new PageTheoryMenu(VMM);
             pagePracticeMenu = new PagePracticeMenu();
             pageTrainerMenu = new PageTrainer();
+
+            menuPoints = new List<StackPanel>() { spTheory, spCalculator, spPractice, spTrainer };
         }
 
         //Загрузка пунктов меню
@@ -57,7 +63,11 @@ namespace LogicalFuncs
                 case "Калькулятор":
                     PagesNavigation.PageContener.Navigate(new PageTrainer(true));
                     break;
+                case "Информация":
+                    PagesNavigation.PageContener.Navigate(new PageInformation());
+                    break;
             }
+
         }
 
         //Анимация плавного появления страницы

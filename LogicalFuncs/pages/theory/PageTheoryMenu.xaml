@@ -33,7 +33,7 @@
 
         <Style TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="FontFamily" Value="/LogicalFuncs;component/fonts/#Roboto Thin"/>
+            <Setter Property="FontFamily" Value="/LogicalFuncs;component/fonts/#Roboto Light"/>
             <Setter Property="Foreground" Value="#1A76CE"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>
@@ -64,42 +64,66 @@
 
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
                 <Image Source="../../images/theory/Inversion.png" Uid="\source\docs\theory\Inversion.docx" MouseDown="Image_MouseDown"/>
-                <TextBlock>Инверсия</TextBlock>
+                <TextBlock>
+                    <Run>Инверсия</Run>
+                    <Run FontFamily="Arial">¬</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2">
                 <Image Source="../../images/theory/Conjunction.png" Uid="\source\docs\theory\Conjunction.docx"  MouseDown="Image_MouseDown"/>
-                <TextBlock>Конъюнкция</TextBlock>
+                <TextBlock>
+                    <Run>Конъюнкция</Run>
+                    <Run FontFamily="Arial">∧</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0">
                 <Image Source="../../images/theory/Disunction.png"  Uid="\source\docs\theory\Disunction.docx"  MouseDown="Image_MouseDown"/>
-                <TextBlock>Дизъюнкция</TextBlock>
+                <TextBlock>
+                    <Run>Дизъюнкция</Run>
+                    <Run FontFamily="Arial">∨</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
                 <Image Source="../../images/theory/Implication.png" Uid="\source\docs\theory\Implication.docx"  MouseDown="Image_MouseDown"/>
-                <TextBlock>Импликция</TextBlock>
+                <TextBlock>
+                    <Run>Импликация</Run>
+                    <Run FontFamily="Arial">→</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2">
                 <Image Source="../../images/theory/Equivalence.png"  Uid="\source\docs\theory\Equivalence.docx"  MouseDown="Image_MouseDown"/>
-                <TextBlock>Эквиваленция</TextBlock>
+                <TextBlock>
+                    <Run>Эквиваленция</Run>
+                    <Run FontFamily="Arial">↔</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0">
                 <Image Source="../../images/theory/PierArrow.png"  Uid="\source\docs\theory\PierArrow.docx"  MouseDown="Image_MouseDown"/>
-                <TextBlock>Стрелка Пирса</TextBlock>
+                <TextBlock>
+                    <Run>Стрелка Пирса</Run>
+                    <Run FontFamily="Arial">↓</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1">
                 <Image Source="../../images/theory/SchaefferStroke.png"  Uid="\source\docs\theory\SchaefferStroke.docx"  MouseDown="Image_MouseDown"/>
-                <TextBlock>Штрих Шеффера</TextBlock>
+                <TextBlock>
+                    <Run>Штрих Шеффера</Run>
+                    <Run FontFamily="Arial">|</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2">
                 <Image Source="../../images/theory/SumModulo.png"  Uid="\source\docs\theory\SumModulo.docx"  MouseDown="Image_MouseDown"/>
-                <TextBlock>Сумма по модулю два</TextBlock>
+                <TextBlock>
+                    <Run>Сумма по модулю два</Run>
+                    <Run FontFamily="Arial" FontSize="18">⊕</Run>
+                </TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0">

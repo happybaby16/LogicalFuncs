@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>123.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -67,6 +67,9 @@
     <Compile Include="Model\LogicFucnsParser.cs" />
     <Compile Include="Model\LogicFuncCalculator.cs" />
     <Compile Include="Model\LogicOperations.cs" />
+    <Compile Include="pages\information\PageInformation.xaml.cs">
+      <DependentUpon>PageInformation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\practice\PagePracticeMenu.xaml.cs">
       <DependentUpon>PagePracticeMenu.xaml</DependentUpon>
     </Compile>
@@ -109,6 +112,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="pages\information\PageInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pages\practice\PagePracticeMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -211,10 +218,14 @@
     <Resource Include="images\practice\PracticalTaskTablesClasses.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ApplicationIcon.ico" />
+    <Resource Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="123.ico" />
+    <Resource Include="images\information\Calculator.png" />
+    <Resource Include="images\information\Errors.png" />
+    <Resource Include="images\information\Practice.png" />
+    <Resource Include="images\information\Theory.png" />
+    <Resource Include="images\information\Trainer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

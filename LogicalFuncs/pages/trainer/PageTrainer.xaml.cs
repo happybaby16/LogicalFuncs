@@ -32,6 +32,7 @@ namespace LogicalFuncs.pages.trainer
 
         List<string> parsedFuncs = new List<string>();
 
+        int startSelection = 0;
 
         public PageTrainer(bool accessCalculator=false)
         {
@@ -48,7 +49,9 @@ namespace LogicalFuncs.pages.trainer
         {
             Button obj = (Button)sender;
             txtFunc.Text += obj.Content;
+
         }
+
 
         private void Clear(object sender, RoutedEventArgs e)
         {
@@ -238,5 +241,7 @@ namespace LogicalFuncs.pages.trainer
             }
             catch{}
         }
+
+    
     }
 }
