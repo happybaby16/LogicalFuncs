@@ -30,41 +30,51 @@
             <TextBlock 
                 x:Name="btnTheory"
                 Text="●"
+                Foreground="{StaticResource AppBlueColor}"
                 FontSize="20"
                 Uid="../../images/information/Theory.png"
                 MouseDown="Information_Pagination"
+                Opacity="0.45"
                 />
 
             <TextBlock 
                 x:Name="btnPractice"
                 Text="●"
+                Foreground="{StaticResource AppBlueColor}"
                 FontSize="20"
                 Uid="../../images/information/Practice.png"
                 MouseDown="Information_Pagination"
+                Opacity="0.45"
                 />
 
             <TextBlock 
                 x:Name="btnTrainer"
                 Text="●"
+                Foreground="{StaticResource AppBlueColor}"
                 FontSize="20"
                 Uid="../../images/information/Trainer.png"
                 MouseDown="Information_Pagination"
+                Opacity="0.45"
                 />
 
             <TextBlock 
                 x:Name="btnErrors"
                 Text="●"
+                Foreground="{StaticResource AppBlueColor}"
                 FontSize="20"
                 Uid="../../images/information/Errors.png"
                 MouseDown="Information_Pagination"
+                Opacity="0.45"
                 />
 
             <TextBlock 
                 x:Name="btnCalculator"
                 Text="●"
+                Foreground="{StaticResource AppBlueColor}"
                 FontSize="20"
                 Uid="../../images/information/Calculator.png"
                 MouseDown="Information_Pagination"
+                Opacity="0.45"
                 />
         </StackPanel>
     </Grid>

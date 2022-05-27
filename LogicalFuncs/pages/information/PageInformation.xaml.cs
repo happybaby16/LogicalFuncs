@@ -25,13 +25,19 @@ namespace LogicalFuncs.pages.information
         BitmapImage imgTrainer = new BitmapImage(new Uri("../../images/information/Trainer.png", UriKind.Relative));
         BitmapImage imgErrors = new BitmapImage(new Uri("../../images/information/Errors.png", UriKind.Relative));
         BitmapImage imgCalculator = new BitmapImage(new Uri("../../images/information/Calculator.png", UriKind.Relative));
-       
+
+        BitmapImage selectedImage;
+
+        List<TextBlock> txtPoints;
         int startMarginTop = 19;
         
         List<BitmapImage> bitmapImages;
         public PageInformation()
         {
             InitializeComponent();
+
+            txtPoints = new List<TextBlock> { btnTheory, btnPractice, btnTrainer, btnErrors, btnCalculator};
+
             bitmapImages = new List<BitmapImage> { imgTheory, imgPractice, imgTrainer, imgErrors, imgCalculator };
             imgCurrentImage.Source = imgTheory;
         }
@@ -50,9 +56,12 @@ namespace LogicalFuncs.pages.information
 
             TextBlock obj = (TextBlock)sender;
             string path = obj.Uid;
+            int selectedImageIndex = bitmapImages.IndexOf(bitmapImages.Single(x => x.UriSource.OriginalString == path));
             imgCurrentImage.Source = new BitmapImage(new Uri(path, UriKind.Relative));
 
-            
+            txtPoints.ForEach(x => x.Opacity = 0.45);
+            txtPoints[selectedImageIndex].Opacity = 1;
+
             imgCurrentImage.Opacity = 0;
             imgCurrentImage.Margin = new Thickness(0, 0, startMarginTop, 0);
             for (int i = 0; i < 20; i++)
