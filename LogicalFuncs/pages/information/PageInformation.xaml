@@ -19,6 +19,7 @@
             RenderOptions.BitmapScalingMode="HighQuality"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            MouseDown="imgCurrentImage_MouseDown"
             />
 
         <StackPanel 

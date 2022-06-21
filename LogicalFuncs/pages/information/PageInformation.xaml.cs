@@ -20,17 +20,19 @@ namespace LogicalFuncs.pages.information
     /// </summary>
     public partial class PageInformation : Page
     {
+        bool imageClickIsLocked = false;
+
         BitmapImage imgTheory = new BitmapImage(new Uri("../../images/information/Theory.png", UriKind.Relative));
         BitmapImage imgPractice = new BitmapImage(new Uri("../../images/information/Practice.png", UriKind.Relative));
         BitmapImage imgTrainer = new BitmapImage(new Uri("../../images/information/Trainer.png", UriKind.Relative));
         BitmapImage imgErrors = new BitmapImage(new Uri("../../images/information/Errors.png", UriKind.Relative));
         BitmapImage imgCalculator = new BitmapImage(new Uri("../../images/information/Calculator.png", UriKind.Relative));
 
-        BitmapImage selectedImage;
-
         List<TextBlock> txtPoints;
         int startMarginTop = 19;
-        
+        int selectedImageIndex = 0;
+
+
         List<BitmapImage> bitmapImages;
         public PageInformation()
         {
@@ -56,7 +58,7 @@ namespace LogicalFuncs.pages.information
 
             TextBlock obj = (TextBlock)sender;
             string path = obj.Uid;
-            int selectedImageIndex = bitmapImages.IndexOf(bitmapImages.Single(x => x.UriSource.OriginalString == path));
+            selectedImageIndex = bitmapImages.IndexOf(bitmapImages.Single(x => x.UriSource.OriginalString == path));
             imgCurrentImage.Source = new BitmapImage(new Uri(path, UriKind.Relative));
 
             txtPoints.ForEach(x => x.Opacity = 0.45);
@@ -72,8 +74,45 @@ namespace LogicalFuncs.pages.information
             }
         }
 
-       
+        private async void imgCurrentImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!imageClickIsLocked)
+            {
+                imgCurrentImage.Opacity = 1;
+                imgCurrentImage.Margin = new Thickness(0, 0, 0, 0);
+                for (int i = 0; i < 20; i++)
+                {
+                    imgCurrentImage.Opacity -= 0.05;
+                    imgCurrentImage.Margin = new Thickness(startMarginTop - (i), 0, 0, 0);
+                    await Task.Delay(10);
+                }
 
-       
+
+                imageClickIsLocked = true;
+                if (selectedImageIndex + 1 < bitmapImages.Count)
+                {
+                    selectedImageIndex += 1;
+                }
+                else
+                {
+                    selectedImageIndex = 0;
+                }
+
+                imgCurrentImage.Source = bitmapImages.ElementAt(selectedImageIndex);
+
+                txtPoints.ForEach(x => x.Opacity = 0.45);
+                txtPoints[selectedImageIndex].Opacity = 1;
+
+                imgCurrentImage.Opacity = 0;
+                imgCurrentImage.Margin = new Thickness(0, 0, startMarginTop, 0);
+                for (int i = 0; i < 20; i++)
+                {
+                    imgCurrentImage.Opacity += 0.05;
+                    imgCurrentImage.Margin = new Thickness(0, 0, startMarginTop - (i), 0);
+                    await Task.Delay(10);
+                }
+            }
+            imageClickIsLocked = false;
+        }
     }
 }

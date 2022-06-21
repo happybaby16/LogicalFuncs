@@ -274,27 +274,27 @@ namespace LogicalFuncs.pages.trainer
             {
                 if (classSaveZero.IsChecked != Func.IsSavedZero)
                 {
-                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K0", "сохраняет константу 0"));
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K0"));
                 }
 
                 if (classSaveOne.IsChecked != Func.IsSavedOne)
                 {
-                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K1", "сохраняет константу 1"));
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "K1"));
                 }
 
                 if (classSelfDual.IsChecked != Func.IsSelfDual)
                 {
-                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kс", "самодвойственная функция"));
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kс"));
                 }
 
                 if (classLinear.IsChecked != Func.IsLiner)
                 {
-                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kл", "линейная функция"));
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kл" ));
                 }
 
                 if (classMonotony.IsChecked != Func.IsMonotony)
                 {
-                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kм", "монотонная функция"));
+                    detectedErrors.Add(new TrainerError(Func.LogicalFunc, "Kм"));
                 }
             }
 

@@ -15,7 +15,14 @@ namespace LogicalFuncs.ViewModel.Patterns
         public TrainerError(string logicalFunc, LogicalFuncsLogs errorObject, int column, int row)
         {
             Type = TypeError.ErrorTable;
-            ErrorMessage = $"Заполнение таблицы функции {logicalFunc}. Строка {row}, столбец {column}: {errorObject.OperationPriority}={Convert.ToInt32(errorObject.FirstValue)}{errorObject.OperationValue.Value}{Convert.ToInt32(errorObject.SecondValue)}";
+            if (errorObject.OperationValue.GetOperation != Operation.Inversion)
+            {
+                ErrorMessage = $"Заполнение таблицы функции {logicalFunc}. Строка {row}, столбец {column}: {errorObject.OperationPriority}={Convert.ToInt32(errorObject.FirstValue)}{errorObject.OperationValue.Value}{Convert.ToInt32(errorObject.SecondValue)}";
+            }
+            else
+            {
+                ErrorMessage = $"Заполнение таблицы функции {logicalFunc}. Строка {row}, столбец {column}: {errorObject.OperationPriority}={errorObject.OperationValue.Value}{Convert.ToInt32(errorObject.FirstValue)}";
+            }
         }
 
         public TrainerError(string logicalFunc, int column, int row)
@@ -24,10 +31,10 @@ namespace LogicalFuncs.ViewModel.Patterns
             ErrorMessage = $"Заполнение таблицы функции {logicalFunc}. Строка {row}, столбец {column}: ошибка заполнения данных";
         }
 
-        public TrainerError(string logicalFunc, string classes, string classesAbout)
+        public TrainerError(string logicalFunc, string classes)
         {
             Type = TypeError.ErrorClasses;
-            ErrorMessage = $"Определение замкнутого класса {classes} функции {logicalFunc}: {classesAbout}.";
+            ErrorMessage = $"Определение замкнутого класса {classes} функции {logicalFunc}.";
         }
 
         public TrainerError(string logicalFunc, TypeError typeError, string messageError)

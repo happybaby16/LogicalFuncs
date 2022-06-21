@@ -537,8 +537,24 @@ namespace LogicFuncs.Model
 
                 for (int i = 0; i < polinomData.Count; i++)
                 {
-                    if (i == 0 || i == 1 || i == 2 || i == 4) continue;
-                    if (polinomData[i][0] == true) return false;
+                    List<int> tempBits = new List<int>();
+                    for (int k = VariableNames.Count - 1; k != -1; k--)
+                    {
+                        int bit = (i >> k) & 1;
+                        if (bit == 1)
+                        {
+                            tempBits.Add(bit);
+                        }
+                    }
+
+                    if (tempBits.Count < 2)
+                    {
+                        continue;
+                    }
+                    else if (polinomData[i][0] == true)
+                    { 
+                        return false;
+                    }
                 }
                 return true;
             }
