@@ -142,7 +142,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <CheckBox Grid.Column="0" Style="{StaticResource checkBoxClasses}" Margin="0.5,0,0,0" Content="[∑]" IsChecked="{Binding Path=IsClassesOn}" FontSize="14" Checked="Classes_CheckBox_Checked" Unchecked="Classes_CheckBox_Unchecked" ToolTip="Определение принадлежности функции к замкнутым классам"/>
-                <Button Grid.Column="1" Style="{StaticResource btnAddFunc}" Content="+" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Click="AddFunc"/>
+                <Button Grid.Column="1" Style="{StaticResource btnAddFunc}" Content="+" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Click="AddFunc" ToolTip="Добавить функцию"/>
             </Grid>
 
             <TextBox x:Name="txtFunc" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,0,0,5" AcceptsReturn="{Binding Path=IsEnableAddFuncButton}"/>
@@ -150,10 +150,10 @@
             <!--Кнопки калькулятора-->
 
             <!--Первая строка кнопок сверху-->
-            <Button Style="{StaticResource btnCalculator}" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1"   Click="Clear"/>
+            <Button Style="{StaticResource btnCalculator}" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1"   Click="Clear" ToolTip="Очистить"/>
             <Button Style="{StaticResource btnCalculator}" Content="(" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1"   Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content=")" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="1"   Click="Button_Click"/>
-            <Button Style="{StaticResource btnCalculator}" Content="⌫" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1" FontSize="18" Click="RemoveLastElement"/>
+            <Button Style="{StaticResource btnCalculator}" Content="⌫" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1" FontSize="18" Click="RemoveLastElement" ToolTip="Удалить последний символ"/>
             <!--Вторая строка кнопок сверху-->
             <Button Style="{StaticResource btnCalculator}" Content="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2" Foreground="{StaticResource AppGreyText}" Click="Button_Click"/>
             <Button Style="{StaticResource btnCalculator}" Content="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Foreground="{StaticResource AppGreyText}"  Click="Button_Click"/>
@@ -178,7 +178,7 @@
             <Button Style="{StaticResource btnCalculator}" Content="↓" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="6" FontSize="30"  Click="Button_Click" ToolTip="Стрелка Пирса"/>
             <Button Style="{StaticResource btnCalculator}" Content="⊕" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" FontSize="26" Click="Button_Click" ToolTip="Сумма по модулю два"/>
             <Button Style="{StaticResource btnCalculator}" Content="|" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="6" FontSize="24" Click="Button_Click" ToolTip="Штрих Шеффера"/>
-            <Button Style="{StaticResource btnCalculator}" Content="=" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="6" Background="{StaticResource AppBlueColor}" Foreground="White"  FontSize="40"  Click="ResultAdding"/>
+            <Button Style="{StaticResource btnCalculator}" Content="=" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="6" Background="{StaticResource AppBlueColor}" Foreground="White"  FontSize="40"  Click="ResultAdding" ToolTip="Вывести таблицы истинности"/>
 
         </Grid>
 

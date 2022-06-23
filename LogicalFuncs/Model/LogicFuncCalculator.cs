@@ -65,7 +65,7 @@ namespace LogicFuncs.Model
                         case "≡":
                             return 6;
                     }
-                return -1;//Error code (Not operation)
+                return -1;//Код ошибки (нет операции)
             }
         }
 
@@ -113,7 +113,7 @@ namespace LogicFuncs.Model
                     case "≡":
                         return Operation.Equivalence;
                     }
-                return Operation.NullOperation;//Error code (Not operation)
+                return Operation.NullOperation;//Код ошибки (нет операции)
             }
         }
     }
@@ -148,6 +148,12 @@ namespace LogicFuncs.Model
             tokenListFunc = GetTokenListFunc(this.LogicalFunc);
             VariableNames = LogicFucnsParser.GetVariable(logicFunc);
         }
+
+        /// <summary>
+        /// Функция возращающая список токеном из которого состоит логическое ВЫРАЖЕНИЕ (не функция)
+        /// </summary>
+        /// <param name="logicExpression"></param>
+        /// <returns></returns>
         public List<Token> GetTokenList(string logicExpression)
         {
             tokenList = new List<Token>();
@@ -175,6 +181,11 @@ namespace LogicFuncs.Model
             return tokenList;
         }
 
+        /// <summary>
+        /// Функция возращающая список токеном из которого состоит логическая ФУНКЦИЯ (не выражение)
+        /// </summary>
+        /// <param name="funcString"></param>
+        /// <returns></returns>
         public List<Token> GetTokenListFunc(string funcString)
         {
             tokenListFunc = new List<Token>();
@@ -204,7 +215,7 @@ namespace LogicFuncs.Model
 
 
         /// <summary>
-        /// /Функция, которая возвращает значение логического выражения
+        /// /Функция, которая возвращает значение логического ВЫРАЖЕНИЯ
         /// </summary>
         /// <param name="logicExpression">Логическое выражение. Например: (0V1|1)</param>
         /// <returns></returns>
@@ -412,7 +423,11 @@ namespace LogicFuncs.Model
             return null;
            
         }
-
+        
+        /// <summary>
+        /// Функция, начинающая считать значение логический ФУНКЦИИ
+        /// </summary>
+        /// <returns></returns>
         public List<bool> StartCalculate()
         {
             CalculationLogs = new List<List<LogicalFuncsLogs>>();

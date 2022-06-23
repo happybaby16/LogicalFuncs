@@ -134,7 +134,9 @@
                   VerticalContentAlignment="Center"
                   Style="{StaticResource ComboBoxFlatStyle}"
                   Grid.Row="0"
-                  SelectedIndex="0">
+                  SelectedIndex="0"
+                  ToolTip="Режим просмотра ошибок. &#x0a;'Сокращенный режим' указывает только на функцию, где была совершена ошибка. &#x0a;'Расширеный режим' указывает на то, где была совершена ошибка и в чём ошибка заключается."
+                  >
 
             <ComboBoxItem>Сокращенный список ошибок</ComboBoxItem>
             <ComboBoxItem>Расширенный список ошибок</ComboBoxItem>
